@@ -1,0 +1,58 @@
+# compiled output
+frontend/dist
+frontend/tmp
+frontend/out-tsc
+
+# dependencies
+frontend/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+/docs
+
+# e2e
+frontend/e2e/*.js
+frontend/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+
+
+# Backend
+
+backend/node_modules
+backend/public/hot
+backend/public/storage
+backend/storage/*.key
+backend/vendor
+backend/.env
+backend/.env.backup
+backend/.phpunit.result.cache
+backend/docker-compose.override.yml
+backend/Homestead.json
+backend/Homestead.yaml
+backend/npm-debug.log
+backend/yarn-error.log
