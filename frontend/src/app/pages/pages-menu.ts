@@ -2,6 +2,11 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
+    title: 'Manage Employees',
+    icon: 'home-outline',
+    link: '/pages/employees',
+  },
+  {
     title: 'Manage Resources',
     icon: 'home-outline',
     link: '/pages/iot-dashboard',
