@@ -4,7 +4,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Manage Employees',
     icon: 'home-outline',
-    link: '/pages/employees',
+    link: '/pages/employees/index',
   },
   {
     title: 'Manage Resources',

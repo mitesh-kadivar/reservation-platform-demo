@@ -5,7 +5,6 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
-import { EmployeesComponent } from './employees/employees.component';
 
 const routes: Routes = [{
   path: '',
@@ -21,7 +20,8 @@ const routes: Routes = [{
     },
     {
       path: 'employees',
-      component: EmployeesComponent,
+      loadChildren: () => import('./employees/employees.module')
+        .then(m => m.EmployeesModule),
     },
     {
       path: 'layout',

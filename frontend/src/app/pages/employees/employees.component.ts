@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'ngx-employees',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+  template: `
+    <router-outlet></router-outlet>
+  `,
 })
-export class EmployeesComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class EmployeesComponent {
 
 }

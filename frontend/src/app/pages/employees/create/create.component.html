@@ -1,0 +1,42 @@
+<div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Add Employee</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="registerForm" (ngSubmit)="registerEmployee()">
+          <div class="form-group">
+            <label for="firstName" class="label">First Name*</label>
+            <input type="text" formControlName="firstName" nbInput fullWidth id="firstName" placeholder="First name" autocomplete="off">
+            <div *ngIf="(getControl.firstName.touched || submitted) && getControl.firstName.invalid" class="text-danger">
+                <div *ngIf="getControl.firstName.errors && getControl.firstName.errors.required">First name is required!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="label">Last Name*</label>
+            <input type="text" formControlName="lastName" nbInput fullWidth id="LastName" placeholder="Last name" autocomplete="off">
+            <div *ngIf="(getControl.lastName.touched || submitted) && getControl.lastName.invalid" class="text-danger">
+                <div *ngIf="getControl.lastName.errors && getControl.lastName.errors.required">Last name is required!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="label">Email address*</label>
+            <input type="email" formControlName="email" nbInput fullWidth id="email" placeholder="Email" autocomplete="off">
+            <div *ngIf="(getControl.email.touched || submitted) && getControl.email.invalid" class="text-danger">
+                <div *ngIf="getControl.email.errors && getControl.email.errors.required">Email is required!</div>
+                <div *ngIf="getControl.email.errors && getControl.email.errors.email">Email seems invalid!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="profile" class="label">Profile</label>
+            <input type="file" nbInput fullWidth id="profile" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="description" class="label">Description</label>
+            <textarea rows="3" nbInput fullWidth placeholder="Description"></textarea>
+          </div>
+          <button type="submit" nbButton status="danger" [class.btn-primary]="registerForm.valid" [class.btn-secondary]="!registerForm.valid"
+          class="btn btn-block">Submit</button>
+        </form>
+        <div class="text-danger" *ngIf="formError">{{formError}}</div>
+      </nb-card-body>
+    </nb-card>
+</div>
