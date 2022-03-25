@@ -4,17 +4,10 @@
       <nb-card-body>
         <form [formGroup]="registerForm" (ngSubmit)="registerEmployee()">
           <div class="form-group">
-            <label for="firstName" class="label">First Name*</label>
-            <input type="text" formControlName="firstName" nbInput fullWidth id="firstName" placeholder="First name" autocomplete="off">
-            <div *ngIf="(getControl.firstName.touched || submitted) && getControl.firstName.invalid" class="text-danger">
-                <div *ngIf="getControl.firstName.errors && getControl.firstName.errors.required">First name is required!</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="lastName" class="label">Last Name*</label>
-            <input type="text" formControlName="lastName" nbInput fullWidth id="LastName" placeholder="Last name" autocomplete="off">
-            <div *ngIf="(getControl.lastName.touched || submitted) && getControl.lastName.invalid" class="text-danger">
-                <div *ngIf="getControl.lastName.errors && getControl.lastName.errors.required">Last name is required!</div>
+            <label for="name" class="label">Name*</label>
+            <input type="text" formControlName="name" nbInput fullWidth id="name" placeholder="Name" autocomplete="off">
+            <div *ngIf="(getControl.name.touched || submitted) && getControl.name.invalid" class="text-danger">
+                <div *ngIf="getControl.name.errors && getControl.name.errors.required">Name is required!</div>
             </div>
           </div>
           <div class="form-group">
