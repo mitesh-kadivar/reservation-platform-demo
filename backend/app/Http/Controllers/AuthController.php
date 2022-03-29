@@ -45,4 +45,32 @@ class AuthController extends Controller
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
     }
+
+    /**
+     * Change Password.
+     *
+     * @param   Request $request
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function changePassword(Request $request)
+    {
+        // Validation for the password
+        $validator      = Validator::make($request->all(), config('validator.user.change_password'));
+        if ($validator->fails()) {
+            return $this->validationError($validator, $validator->messages()->first());
+        }
+
+        // Fetch current user
+        $userId = getLoggedInUserId();
+        $user   = User::Where('id', $userId)->first();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return $this->error("PASSWORD_NOT_MATCH");
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return $this->success([], 'PASSWORD_CHANGE');
+    }
 }

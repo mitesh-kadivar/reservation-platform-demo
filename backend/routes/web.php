@@ -22,4 +22,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'auth'], function () use ($router) {
         $router->post('login', 'AuthController@login');
     });
+
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        $router->post('change-password', 'AuthController@changePassword');
+    });
 });
