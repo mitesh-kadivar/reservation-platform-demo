@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'ngx-index',
@@ -56,12 +57,14 @@ export class IndexComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData) {
+  constructor(private service: SmartTableData, private authService: AuthService) {
     const data = this.service.getData();
     this.source.load(data);
   }
 
   ngOnInit(): void {
+    let data = this.authService.getauthenticationData();
+    console.log(data);
   }
 
   onDeleteConfirm(event): void {

@@ -1,0 +1,35 @@
+<div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Edit Employee</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="editRegisterForm" (ngSubmit)="updateEmployee()">
+          <div class="form-group">
+            <label for="name" class="label">Name*</label>
+            <input type="text" formControlName="name" nbInput fullWidth id="name" placeholder="Name" autocomplete="off">
+            <div *ngIf="(getControl.name.touched || submitted) && getControl.name.invalid" class="text-danger">
+                <div *ngIf="getControl.name.errors && getControl.name.errors.required">Name is required!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="label">Email address*</label>
+            <input type="email" formControlName="email" nbInput fullWidth id="email" placeholder="Email" autocomplete="off">
+            <div *ngIf="(getControl.email.touched || submitted) && getControl.email.invalid" class="text-danger">
+                <div *ngIf="getControl.email.errors && getControl.email.errors.required">Email is required!</div>
+                <div *ngIf="getControl.email.errors && getControl.email.errors.email">Email seems invalid!</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="profile" class="label">Profile</label>
+            <input type="file" nbInput fullWidth id="profile" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="description" class="label">Description</label>
+            <textarea rows="3" nbInput fullWidth placeholder="Description"></textarea>
+          </div>
+          <button type="submit" nbButton status="danger" [class.btn-primary]="editRegisterForm.valid" [class.btn-secondary]="!editRegisterForm.valid"
+          class="btn btn-block">Submit</button>
+        </form>
+        <div class="text-danger" *ngIf="formError">{{formError}}</div>
+      </nb-card-body>
+    </nb-card>
+</div>

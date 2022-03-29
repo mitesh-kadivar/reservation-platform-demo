@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { EmployeesComponent } from './employees.component';
 import { CreateComponent } from './create/create.component';
 import { IndexComponent } from './index/index.component';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,6 +16,10 @@ const routes: Routes = [{
     {
       path: 'create',
       component: CreateComponent,
+    },
+    {
+      path: ':empId/edit',
+      component: EditComponent
     }
   ],
 }];

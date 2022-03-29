@@ -7,6 +7,7 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule } from '@
 import { CreateComponent } from './create/create.component';
 import { IndexComponent } from './index/index.component';
 import { CommonModule } from '@angular/common';
+import { EditComponent } from './edit/edit.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
   declarations: [
     EmployeesComponent,
     CreateComponent,
-    IndexComponent
+    IndexComponent,
+    EditComponent
   ],
   providers: [],
 })
