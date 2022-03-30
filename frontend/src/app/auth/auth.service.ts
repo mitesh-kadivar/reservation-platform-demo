@@ -20,6 +20,15 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('auth_app_token') || '{}');
   }
 
+  getAccessToken() {
+    const auth_app_token =  JSON.parse(localStorage.getItem('auth_app_token') || '{}');
+    return auth_app_token.value;
+  }
+
+  getBearerToken = () => {
+    return 'Bearer ' + this.getAccessToken();
+  }
+
   logout() {
     localStorage.removeItem('auth_app_token');
   }

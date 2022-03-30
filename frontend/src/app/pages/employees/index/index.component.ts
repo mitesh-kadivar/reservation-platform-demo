@@ -63,8 +63,6 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let data = this.authService.getauthenticationData();
-    console.log(data);
   }
 
   onDeleteConfirm(event): void {

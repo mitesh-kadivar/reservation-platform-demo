@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile' }, { title: 'Change Password' }, { title: 'Log out' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -78,8 +78,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event.item.title === 'Log out') {
         this.authService.logout();
         this.router.navigate(['/auth']);
+      } else if (event.item.title === 'Change Password') {
+        this.router.navigate(['/pages/employees/change-password']);
       }
-    });
+     });
   }
 
   ngOnDestroy() {
