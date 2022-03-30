@@ -35,8 +35,9 @@ class AuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 DB::table('oauth_access_tokens')->where('user_id', '=', $user->id)->delete();
 
-                $user->token =  $user->createToken('authToken')->accessToken;
-                $response = $user;
+                $user->token = $user->createToken('authToken')->accessToken;
+                $response    = $user;
+
                 return $this->success($response, "USER_LOGGED");
             } else {
                 return $this->error('INVALID_CREDENTIALS');
