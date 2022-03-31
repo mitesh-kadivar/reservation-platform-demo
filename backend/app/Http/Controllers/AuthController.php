@@ -62,16 +62,21 @@ class AuthController extends Controller
             return $this->validationError($validator, $validator->messages()->first());
         }
 
-        // Fetch current user
-        $userId = getLoggedInUserId();
-        $user   = User::Where('id', $userId)->first();
+        try {
+            // Fetch current user
+            $userId = getLoggedInUserId();
+            $user   = User::Where('id', $userId)->first();
 
-        if (!Hash::check($request->old_password, $user->password)) {
-            return $this->error("PASSWORD_NOT_MATCH");
+            if (!Hash::check($request->old_password, $user->password)) {
+                return $this->error("PASSWORD_NOT_MATCH");
+            }
+
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return $this->success([], 'PASSWORD_CHANGE');
+        } catch (\Exception $ex) {
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
-
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-        return $this->success([], 'PASSWORD_CHANGE');
     }
 }
