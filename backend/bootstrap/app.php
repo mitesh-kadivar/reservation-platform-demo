@@ -61,6 +61,7 @@ $app->singleton(
 $app->configure('auth');
 $app->configure('app');
 $app->configure('validator');
+$app->configure('config');
 
 /*
 |--------------------------------------------------------------------------

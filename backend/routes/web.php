@@ -25,5 +25,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->post('change-password', 'AuthController@changePassword');
+
+        # Empoyees
+        $router->post('add-employee', 'EmployeeController@store');
     });
 });

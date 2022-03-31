@@ -54,7 +54,7 @@ class AuthController extends Controller
      * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
      * @return  JsonResponse
      */
-    public function changePassword(Request $request)
+    public function changePassword(Request $request) : JsonResponse
     {
         // Validation for the password
         $validator      = Validator::make($request->all(), config('validator.user.change_password'));
