@@ -1,13 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient, public router: Router) { }
 
   redirectUrl: string;
+
+  login = (loginData: any) => {
+    return this.httpClient.post<any>(environment.baseURL+`auth/login`, loginData);
+  }
 
   isLoggedIn() {
     if (localStorage.getItem('auth_app_token')) {
@@ -21,8 +28,8 @@ export class AuthService {
   }
 
   getAccessToken() {
-    const auth_app_token =  JSON.parse(localStorage.getItem('auth_app_token') || '{}');
-    return auth_app_token.value;
+    const auth_app_token =  JSON.parse(localStorage.getItem('auth_app_token')) || '{}';
+    return auth_app_token;
   }
 
   getBearerToken = () => {
@@ -31,5 +38,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth_app_token');
+    localStorage.removeItem('user_data');
   }
 }

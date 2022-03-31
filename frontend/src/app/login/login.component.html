@@ -14,11 +14,12 @@
     </ul>
 </nb-alert>
 
-<form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
+<form (ngSubmit)="loginForm(form.value)" #form="ngForm" aria-labelledby="title">
 
+    <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
     <div class="form-control-group">
         <label class="label" for="input-email">Email address:</label>
-        <input nbInput fullWidth [(ngModel)]="user.email" #email="ngModel" name="email" id="input-email"
+        <input nbInput fullWidth [(ngModel)]="user_email" #email="ngModel" name="email" id="input-email" 
             pattern=".+@.+\..+" placeholder="Email address" fieldSize="large" autofocus
             [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'"
             [required]="getConfigValue('forms.validation.email.required')"
@@ -37,7 +38,7 @@
         <span class="label-with-link">
             <label class="label" for="input-password">Password:</label>
         </span>
-        <input nbInput fullWidth [(ngModel)]="user.password" #password="ngModel" name="password" type="password"
+        <input nbInput fullWidth [(ngModel)]="user_password" #password="ngModel" name="password" type="password"
             id="input-password" placeholder="Password" fieldSize="large"
             [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
             [required]="getConfigValue('forms.validation.password.required')"
@@ -58,7 +59,7 @@
     </div>
 
     <div class="form-control-group accept-group">
-        <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe" *ngIf="rememberMe">Remember me</nb-checkbox>
+        <nb-checkbox name="rememberMe" [(ngModel)]="cookie" #remember="ngModel" *ngIf="rememberMe">Remember me</nb-checkbox>
     </div>
 
     <button nbButton fullWidth status="primary" size="large" [disabled]="submitted || !form.valid"
