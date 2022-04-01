@@ -7,4 +7,5 @@ return [
     'USER_DOES_NOT_EXIST'    => 'User does not exist',
     'UNAUTHORIZED'           => 'Unauthorized',
     'PASSWORD_NOT_MATCH'     => 'Old password does not match',
+    'NOT_FOUND'              => 'Record not found',
 ];

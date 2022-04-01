@@ -35,4 +35,14 @@ export class EmployeeService {
     this.headers = this.headers.append('Authorization', token);
     return this.headers;
   }
+
+  getAllEmployees() : Observable<Employee[]> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get<Employee[]>(environment.baseURL + `get-employees`, {'headers':this.headers});
+  }
+
+  deleteEmployee(id: number): Observable<Employee> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.delete<Employee>(environment.baseURL + `delete-employee/` + id, {'headers':this.headers});
+  }
 }

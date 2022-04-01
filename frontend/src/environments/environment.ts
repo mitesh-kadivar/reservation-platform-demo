@@ -11,4 +11,5 @@
 export const environment = {
   production: false,
   baseURL: 'http://local.reservation.in/api/',
+  imagePath: 'http://local.reservation.in/images/avatar/',
 };

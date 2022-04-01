@@ -13,6 +13,23 @@ use App\Models\User;
 class EmployeeController extends Controller
 {
     /**
+     * get employees
+     *
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+
+    public function index() : JsonResponse
+    {
+        try {
+            $users = User::select('id', 'name', 'email', 'description', 'profile')->latest()->get();
+            return $this->success($users, "EMPLOYEES_LIST");
+        } catch (\Exception $ex) {
+            return $this->error($ex->getMessage());
+        }
+    }
+
+    /**
      * Create new employee
      *
      * @param   Request $request
@@ -59,6 +76,31 @@ class EmployeeController extends Controller
             $user->save();
 
             return $this->success($user, "EMPLOYEE_INSERTED");
+        } catch (\Exception $ex) {
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
+        }
+    }
+
+    /**
+     * Remove Employee.
+     *
+     * @param   Request $request
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function destroy(Request $request)
+    {
+        $user = User::whereId($request->id)->first();
+        if ($user === null) {
+            return $this->error("NOT_FOUND");
+        }
+
+        try {
+            if ($user->delete()) {
+                return $this->success([], "EMPLOYEE_DELETED");
+            } else {
+                return $this->error("ERROR");
+            }
         } catch (\Exception $ex) {
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
