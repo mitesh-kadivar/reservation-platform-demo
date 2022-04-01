@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'ngx-create',
@@ -10,15 +12,19 @@ export class CreateComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted: boolean = false;
+  imageSrc: string;
   formError: any = null;
+  statusType: any;
   
-  constructor(public formBuilder: FormBuilder) { 
+  constructor(public formBuilder: FormBuilder, private employeeService: EmployeeService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      profile: [''],
+      description: ['']
     })
   }
 
@@ -26,11 +32,38 @@ export class CreateComponent implements OnInit {
     return this.registerForm.controls;
   }
 
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+        this.registerForm.patchValue({
+          profile: this.imageSrc
+        });
+      };
+    }
+  }
+
   registerEmployee() {
     this.submitted = true;
 
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value); 
+      this.employeeService.createEmployee(this.registerForm.value).subscribe((res:any) => {
+        if (res.meta.status === false) {
+          this.formError = "Oops Something went wrong, Please try again.!";
+          this.statusType = 'danger';
+        } else {
+         this.formError = res.meta.message;
+         this.statusType = 'success';
+         this.router.navigateByUrl('pages/employees/index');
+        }
+      }, error => {
+        this.formError = JSON.stringify(error.error) || error;
+      })
     }
   }
   

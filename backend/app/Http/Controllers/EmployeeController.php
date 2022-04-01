@@ -29,14 +29,30 @@ class EmployeeController extends Controller
 
         try {
             $uploadedImage = "";
-            if ($image = $request->hasfile('profile')) {
+            if ($request->profile) {
+
                 directoryObserver(config('config.user.profile_image_path'));
-                $uploadedImage = imageUpload($request->file('profile'), config('config.user.profile_image_path'));
+                $image =  $request->profile;
+                $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image,$name);
+
+                $uploadedImage = $name;
+
+                // Second way to fileupload //
+                // directoryObserver(config('config.user.profile_image_path'));
+                // $uploadedImage = imageUpload($request->file('profile'), config('config.user.profile_image_path'));
+
+                // $file      = $request->file('profile');
+                // $filename  = $file->getClientOriginalName();
+                // $extension = $file->getClientOriginalExtension();
+                // $picture   = date('His').'-'.$filename;
+                // $file->move(public_path(config('config.user.profile_image_path')), $picture);
+                // $uploadedImage = $picture;
             }
 
             $user              = new User();
-            $user->name        = $request->name;
-            $user->email       = $request->email;
+            $user->name        = trim($request->name);
+            $user->email       = trim($request->email);
             $user->password    = Hash::make('User@123');
             $user->profile     = $uploadedImage;
             $user->description = $request->description;

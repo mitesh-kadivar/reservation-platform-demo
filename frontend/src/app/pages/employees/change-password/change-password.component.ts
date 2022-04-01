@@ -47,7 +47,6 @@ export class ChangePasswordComponent implements OnInit {
          }
       }, error => {
         this.formError = error.error.message || error;
-        console.log(this.formError.message);
       });
     }
   }

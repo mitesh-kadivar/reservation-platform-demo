@@ -14,7 +14,7 @@ return [
         'add-employee' => [
             'name'    => 'required',
             'email'   => 'required|email',
-            'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],
     ]
 ];
