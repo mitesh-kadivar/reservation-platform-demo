@@ -45,4 +45,14 @@ export class EmployeeService {
     this.headers = this.getHeaderData();
     return this.httpClient.delete<Employee>(environment.baseURL + `employees/delete/` + id, {'headers':this.headers});
   }
+
+  find(id: number): Observable<Employee> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get<Employee>(environment.baseURL + 'employees/edit/' + id, {'headers':this.headers})
+  }
+
+  update(id: number, employee: Employee): Observable<Employee> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.put<Employee>(environment.baseURL + 'employees/update/' + id, employee, {'headers':this.headers})
+  }
 }

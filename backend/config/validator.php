@@ -16,6 +16,7 @@ return [
             'email'   => 'required|email',
             // 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],
+<<<<<<< Updated upstream
     ],
     'resource' => [
         'add_resource' => [
@@ -28,5 +29,12 @@ return [
             'category_id' => 'required|exists:categories,id',
             'image'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]
+=======
+        'update-employee' => [
+            'name'    => 'required',
+            'email'   => 'required|email',
+            // 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],
+>>>>>>> Stashed changes
     ]
 ];

@@ -10,6 +10,8 @@ export function fileExtensionValidator(validExt: string): ValidatorFn {
           forbidden = false;
         }
       });
+    } else {
+      forbidden = false;
     }
     return forbidden ? { 'inValidExt': true } : null;
   };

@@ -82,6 +82,69 @@ class EmployeeController extends Controller
     }
 
     /**
+     * Edit Employee.
+     *
+     * @param   int $id
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function edit(int $id) : JsonResponse
+    {
+        $user = User::whereId($id)->first();
+
+        if ($user === null) {
+            return $this->error("NOT_FOUND");
+        }
+
+        return $this->success($user, "EMPLOYEES_LIST");
+    }
+
+    /**
+     * Update Employee
+     *
+     * @param   Request $request
+     * @param   int $id
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function update($id, Request $request) : JsonResponse
+    {
+        $user = User::find($id);
+        if ($user === null) {
+            return $this->error("NOT_FOUND");
+        }
+        if ($user->is_type == 1) {
+            return $this->error("ADMIN_UPDATE");
+        }
+        $validator = Validator::make($request->all(), config('validator.user.update-employee'));
+        if ($validator->fails()) {
+            return $this->validationError($validator, $validator->messages()->first());
+        }
+
+        try {
+            $user->name  = trim($request->name);
+            $user->email = trim($request->email);
+
+            if ($request->profile) {
+
+                directoryObserver(config('config.user.profile_image_path'));
+                $image =  $request->profile;
+                $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image,$name);
+
+                $user->profile = $name;
+            }
+            $user->description = $request->description;
+            if (!$user->save()) {
+                return $this->error("ERROR");
+            }
+            return $this->success($user, "EMPLOYEE_UPDATED");
+        } catch (\Exception $ex) {
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
+        }
+    }
+
+    /**
      * Remove Employee.
      *
      * @param   Request $request
@@ -94,10 +157,13 @@ class EmployeeController extends Controller
         if ($user === null) {
             return $this->error("NOT_FOUND");
         }
-
+        if ($user->is_type == 1) {
+            return $this->error("ADMIN_DELETE");
+        }
         try {
             if ($user->delete()) {
                 return $this->success([], "EMPLOYEE_DELETED");
+
             } else {
                 return $this->error("ERROR");
             }
