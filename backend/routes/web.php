@@ -35,11 +35,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         # Resources
         $router->group(['prefix' => 'resource'], function() use ($router) {
-            $router->get('get-resources', 'ResourceController@index');
-            $router->post('add-resource', 'ResourceController@store');
-            $router->put('edit-resource/{id}', 'ResourceController@edit');
-            $router->post('update-resource', 'ResourceController@update');
-            $router->delete('delete-resource/{id}', 'ResourceController@delete');
+            $router->get('list', 'ResourceController@index');
+            $router->post('add', 'ResourceController@store');
+            $router->put('edit/{id}', 'ResourceController@edit');
+            $router->post('update', 'ResourceController@update');
+            $router->delete('delete/{id}', 'ResourceController@delete');
         });
     });
 });
