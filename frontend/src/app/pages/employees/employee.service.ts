@@ -25,7 +25,7 @@ export class EmployeeService {
     this.headers = this.getHeaderData();
     this.headers = this.headers.append('Content-Type', 'multipart/form-data');
     this.headers = this.headers.append('Accept', 'application/json');
-    return this.httpClient.post<Employee>(environment.baseURL + `add-employee`, employee, {'headers': this.headers})
+    return this.httpClient.post<Employee>(environment.baseURL + `employees/add`, employee, {'headers': this.headers})
   }
 
   getHeaderData() {
@@ -38,11 +38,11 @@ export class EmployeeService {
 
   getAllEmployees() : Observable<Employee[]> {
     this.headers = this.getHeaderData();
-    return this.httpClient.get<Employee[]>(environment.baseURL + `get-employees`, {'headers':this.headers});
+    return this.httpClient.get<Employee[]>(environment.baseURL + `employees/get`, {'headers':this.headers});
   }
 
   deleteEmployee(id: number): Observable<Employee> {
     this.headers = this.getHeaderData();
-    return this.httpClient.delete<Employee>(environment.baseURL + `delete-employee/` + id, {'headers':this.headers});
+    return this.httpClient.delete<Employee>(environment.baseURL + `employees/delete/` + id, {'headers':this.headers});
   }
 }

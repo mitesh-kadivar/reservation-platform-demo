@@ -27,8 +27,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('change-password', 'AuthController@changePassword');
 
         # Empoyees
-        $router->post('add-employee', 'EmployeeController@store');
-        $router->get('get-employees', 'EmployeeController@index');
-        $router->delete('delete-employee/{id}', 'EmployeeController@destroy');
+        $router->group(['prefix' => 'employees'], function () use ($router) {
+            $router->post('add', 'EmployeeController@store');
+            $router->get('get', 'EmployeeController@index');
+            $router->delete('delete/{id}', 'EmployeeController@destroy');
+        });
     });
 });

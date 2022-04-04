@@ -88,7 +88,7 @@ class EmployeeController extends Controller
      * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
      * @return  JsonResponse
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request) : JsonResponse
     {
         $user = User::whereId($request->id)->first();
         if ($user === null) {
