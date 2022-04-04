@@ -8,4 +8,5 @@ return [
     'UNAUTHORIZED'           => 'Unauthorized',
     'PASSWORD_NOT_MATCH'     => 'Old password does not match',
     'NOT_FOUND'              => 'Record not found',
+    'RESOURCE_DOES_NOT_EXIST'=> "Resource does not exist",
 ];

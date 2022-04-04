@@ -10,6 +10,6 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://local.reservation.in/api/',
+  baseURL: 'http://local.res_platform.com/api/',
   imagePath: 'http://local.reservation.in/images/avatar/',
 };
