@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../auth/auth.service';
 import { EmployeeService } from '../employee.service';
 import { ConfirmedValidator } from './confirmed.validator';
 
@@ -15,7 +17,7 @@ export class ChangePasswordComponent implements OnInit {
   formError: any = null;
   statusType: any;
   
-  constructor(public formBuilder: FormBuilder, public employeeService: EmployeeService) { 
+  constructor(public formBuilder: FormBuilder, public employeeService: EmployeeService, private authService: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -44,6 +46,10 @@ export class ChangePasswordComponent implements OnInit {
          } else {
           this.formError = res.meta.message;
           this.statusType = 'success';
+          this.authService.logout();
+          setTimeout(() => {
+            this.router.navigate(['/auth']);
+          }, 2000);
          }
       }, error => {
         this.formError = error.error.message || error;
