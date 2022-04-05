@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
     <nb-card>
-      <nb-card-header>Edit Employee</nb-card-header>
+      <nb-card-header>Edit Employee <a class="btn btn-warning btn-sm float-right" routerLink="/pages/employees/index"><i class="fa fa-arrow-left fa-2x"></i></a></nb-card-header>
       <nb-card-body>
         <form [formGroup]="editRegisterForm" (ngSubmit)="updateEmployee()" enctype="multipart/form-data">
           <div class="form-group">
