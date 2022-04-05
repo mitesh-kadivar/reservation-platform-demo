@@ -132,6 +132,7 @@ class EmployeeController extends Controller
                 $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
                 \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image,$name);
 
+                unlink(public_path(config('config.user.profile_image_path'). $user->profile));
                 $user->profile = $name;
             }
             $user->description = $request->description;
@@ -161,6 +162,7 @@ class EmployeeController extends Controller
             return $this->error("ADMIN_DELETE");
         }
         try {
+            unlink(public_path(config('config.user.profile_image_path'). $user->profile));
             if ($user->delete()) {
                 return $this->success([], "EMPLOYEE_DELETED");
 
