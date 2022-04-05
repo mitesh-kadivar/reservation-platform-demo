@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
   statusType: any;
 
   settings = {
-    hideSubHeader: true,
+    // hideSubHeader: true,
     mode: 'external',
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -34,6 +34,9 @@ export class IndexComponent implements OnInit {
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
+    },
+    actions: {
+      add: false
     },
     columns: {
       name: {
