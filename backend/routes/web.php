@@ -31,6 +31,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('add', 'EmployeeController@store');
             $router->get('get', 'EmployeeController@index');
             $router->delete('delete/{id}', 'EmployeeController@destroy');
+            $router->get('edit/{id}', 'EmployeeController@edit');
+            $router->put('update/{id}', 'EmployeeController@update');
         });
 
         # Resources

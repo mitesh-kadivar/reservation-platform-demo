@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { environment } from '../../../../environments/environment';
 
@@ -61,7 +62,7 @@ export class IndexComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private empService: EmployeeService) {}
+  constructor(private service: SmartTableData, private empService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllData();
@@ -82,8 +83,10 @@ export class IndexComponent implements OnInit {
     }
   }
 
-  onFoo(event, eventName: string): void {
-    console.log(eventName, event);
+  onEditEmployee(event, eventName: string): void {
+    //console.log(eventName, event);
+    let empId = btoa(event.data.id);
+    this.router.navigate(['/pages/employees/edit/', empId]);
   }
 
   getAllData() {

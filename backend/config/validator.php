@@ -16,6 +16,11 @@ return [
             'email'   => 'required|email',
             // 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],
+        'update-employee' => [
+            'name'    => 'required',
+            'email'   => 'required|email',
+            // 'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ],
     ],
     'resource' => [
         'add_resource' => [

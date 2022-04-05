@@ -23,7 +23,7 @@ const routes: Routes = [{
       component: ChangePasswordComponent
     },
     {
-      path: ':empId/edit',
+      path: 'edit/:empId',
       component: EditComponent
     }
   ],
