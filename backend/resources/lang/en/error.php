@@ -8,10 +8,7 @@ return [
     'UNAUTHORIZED'           => 'Unauthorized',
     'PASSWORD_NOT_MATCH'     => 'Old password does not match',
     'NOT_FOUND'              => 'Record not found',
-<<<<<<< Updated upstream
-    'RESOURCE_DOES_NOT_EXIST'=> "Resource does not exist",
-=======
     'ADMIN_UPDATE'           => 'You cann\'t update admin user',
     'ADMIN_DELETE'           => 'You cann\'t delete admin user',
->>>>>>> Stashed changes
+    'RESOURCE_DOES_NOT_EXIST'=> "Resource does not exist",
 ];
