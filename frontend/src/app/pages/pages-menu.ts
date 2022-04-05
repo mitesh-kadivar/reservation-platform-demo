@@ -9,7 +9,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Manage Resources',
     icon: 'home-outline',
-    link: '/pages/iot-dashboard',
+    link: '/pages/resources/index',
   },
   {
     title: 'Manage Booking',

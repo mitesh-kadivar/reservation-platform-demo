@@ -26,6 +26,12 @@ const routes: Routes = [{
         .then(m => m.EmployeesModule),
     },
     {
+      path: 'resources',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('./resources/resources.module')
+        .then(m => m.ResourcesModule),
+    },
+    {
       path: 'tables',
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),
