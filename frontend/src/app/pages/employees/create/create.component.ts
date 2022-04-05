@@ -55,7 +55,7 @@ export class CreateComponent implements OnInit {
     if (this.registerForm.valid) {
       this.employeeService.createEmployee(this.registerForm.value).subscribe((res:any) => {
         if (res.meta.status === false) {
-          this.formError = "Oops Something went wrong, Please try again.!";
+          this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
           this.statusType = 'danger';
         } else {
          this.formError = res.meta.message;

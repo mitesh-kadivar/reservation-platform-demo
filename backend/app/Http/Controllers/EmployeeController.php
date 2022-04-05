@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use App\Events\EmailNotificationEvent;
 use App\Models\User;
 
 class EmployeeController extends Controller
@@ -46,12 +47,12 @@ class EmployeeController extends Controller
 
         try {
             $uploadedImage = "";
+            $randPassword = randomPassword();
             if ($request->profile) {
-
                 directoryObserver(config('config.user.profile_image_path'));
                 $image =  $request->profile;
                 $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image,$name);
+                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image, $name);
 
                 $uploadedImage = $name;
 
@@ -70,12 +71,20 @@ class EmployeeController extends Controller
             $user              = new User();
             $user->name        = trim($request->name);
             $user->email       = trim($request->email);
-            $user->password    = Hash::make('User@123');
+            $user->password    = Hash::make($randPassword);
             $user->profile     = $uploadedImage;
             $user->description = $request->description;
-            $user->save();
 
-            return $this->success($user, "EMPLOYEE_INSERTED");
+            if ($user->save()) {
+                $model = [
+                    'to_email'      => trim($request->email),
+                    'user_name'     => trim($user->name),
+                    'user_password' => $randPassword,
+                    'slug'          => 'send_login_credentials',
+                ];
+                event(new EmailNotificationEvent($model));
+                return $this->success($user, "EMPLOYEE_INSERTED");
+            }
         } catch (\Exception $ex) {
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
@@ -116,7 +125,9 @@ class EmployeeController extends Controller
         if ($user->is_type == 1) {
             return $this->error("ADMIN_UPDATE");
         }
-        $validator = Validator::make($request->all(), config('validator.user.update-employee'));
+        $validator = config('validator.user.update-employee');
+        $validator['email'] = 'email|unique:users,email,'.$id;
+        $validator = Validator::make($request->all(), $validator);
         if ($validator->fails()) {
             return $this->validationError($validator, $validator->messages()->first());
         }
@@ -126,11 +137,10 @@ class EmployeeController extends Controller
             $user->email = trim($request->email);
 
             if ($request->profile) {
-
                 directoryObserver(config('config.user.profile_image_path'));
                 $image =  $request->profile;
                 $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image,$name);
+                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image, $name);
 
                 unlink(public_path(config('config.user.profile_image_path'). $user->profile));
                 $user->profile = $name;
@@ -165,7 +175,6 @@ class EmployeeController extends Controller
             unlink(public_path(config('config.user.profile_image_path'). $user->profile));
             if ($user->delete()) {
                 return $this->success([], "EMPLOYEE_DELETED");
-
             } else {
                 return $this->error("ERROR");
             }
