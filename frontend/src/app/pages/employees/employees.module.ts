@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../auth/token.interceptor';
 import { AuthService } from '../../auth/auth.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { AuthService } from '../../auth/auth.service';
     CreateComponent,
     IndexComponent,
     EditComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProfileComponent
   ],
   providers: [
     AuthService,

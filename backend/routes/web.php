@@ -33,6 +33,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->delete('delete/{id}', 'EmployeeController@destroy');
             $router->get('edit/{id}', 'EmployeeController@edit');
             $router->put('update/{id}', 'EmployeeController@update');
+            $router->put('profile-update/{id}', 'EmployeeController@updateProfile');
         });
 
         # Resources

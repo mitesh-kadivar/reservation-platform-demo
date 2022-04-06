@@ -5,6 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { IndexComponent } from './index/index.component';
 import { EditComponent } from './edit/edit.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [{
   path: '',
@@ -25,6 +26,10 @@ const routes: Routes = [{
     {
       path: 'edit/:empId',
       component: EditComponent
+    },
+    {
+      path: 'profile',
+      component: ProfileComponent
     }
   ],
 }];

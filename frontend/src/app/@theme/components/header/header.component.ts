@@ -80,6 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigate(['/auth']);
       } else if (event.item.title === 'Change Password') {
         this.router.navigate(['/pages/employees/change-password']);
+      } else if (event.item.title === 'Profile') {
+        this.router.navigate(['/pages/employees/profile']);
       }
      });
   }

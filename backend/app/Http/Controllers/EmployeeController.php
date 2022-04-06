@@ -196,4 +196,50 @@ class EmployeeController extends Controller
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
     }
+
+    /**
+     * Update Employee Profile
+     *
+     * @param   Request $request
+     * @param   int $id
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function updateProfile($id, Request $request) : JsonResponse
+    {
+        $user = User::find($id);
+        if ($user === null) {
+            return $this->error("NOT_FOUND");
+        }
+
+        $validator = config('validator.user.update-employee');
+        $validator = Validator::make($request->all(), $validator);
+        if ($validator->fails()) {
+            return $this->validationError($validator, $validator->messages()->first());
+        }
+
+        try {
+            $user->name  = trim($request->name);
+
+            if ($request->profile) {
+                directoryObserver(config('config.user.profile_image_path'));
+                $image =  $request->profile;
+                $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+                \Storage::disk('local')->putFileAs(config('config.user.profile_image_path'), $image, $name);
+
+                if ($user->profile) {
+                    unlink(public_path(config('config.user.profile_image_path'). $user->profile));
+                }
+                $user->profile = $name;
+            }
+            $user->description = $request->description;
+            if (!$user->save()) {
+                return $this->error("ERROR");
+            }
+            Cache::forget('users');
+            return $this->success($user, "EMPLOYEE_PROFILE_UPDATED");
+        } catch (\Exception $ex) {
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
+        }
+    }
 }

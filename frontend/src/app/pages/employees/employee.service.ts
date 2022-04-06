@@ -55,4 +55,9 @@ export class EmployeeService {
     this.headers = this.getHeaderData();
     return this.httpClient.put<Employee>(environment.baseURL + 'employees/update/' + id, employee, {'headers':this.headers})
   }
+
+  profileUpdate(id: number, employee: any) {
+    this.headers = this.getHeaderData();
+    return this.httpClient.put(environment.baseURL + 'employees/profile-update/' + id, employee, {'headers':this.headers})
+  }
 }
