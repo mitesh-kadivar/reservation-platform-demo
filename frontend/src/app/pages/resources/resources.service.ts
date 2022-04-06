@@ -25,8 +25,23 @@ export class ResourcesService {
     return this.httpClient.get<Resource[]>(environment.baseURL + `resources/list`, {'headers': this.headers});
   }
 
+  getCategories(): Observable<Resource> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get<Resource>(environment.baseURL + `resources/categories`, {'headers': this.headers});
+  }
+
   deleteResource(id: number) : Observable<Resource> {
     this.headers = this.getHeaderData();
     return this.httpClient.delete<Resource>(environment.baseURL + `resources/delete/` + id, {'headers': this.headers});
+  }
+
+  find(id: number): Observable<Resource> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get<Resource>(environment.baseURL + 'resources/edit/' + id, {'headers':this.headers})
+  }
+
+  update(id: number, resource: Resource): Observable<Resource> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.put<Resource>(environment.baseURL + 'employees/update/' + id, resource, {'headers':this.headers})
   }
 }

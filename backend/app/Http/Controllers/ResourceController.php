@@ -6,6 +6,7 @@ use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Category;
 
 class ResourceController extends Controller
 {
@@ -69,6 +70,17 @@ class ResourceController extends Controller
         }
 
         return $this->success($resource, 'RESOURCE_FOUND');
+    }
+
+    public function getCategories() : JsonResponse
+    {
+        $categories = Category::select('id', 'title')->get();
+
+        if ($categories === null) {
+            return $this->error("NO_CATEGORIES");
+        }
+
+        return $this->success($categories, "CATEGORIES_LIST");
     }
 
     /**

@@ -14,4 +14,5 @@ return [
     'RESOURCE_UPDATED'     => "The resource details are updated successfully",
     'RESOURCE_DELETED'     => "The resource is deleted successfully",
     'EMPLOYEE_UPDATED'     => 'Empoyee has been updated successfully',
+    'CATEGORIES_LIST'      => "List of categories",
 ];

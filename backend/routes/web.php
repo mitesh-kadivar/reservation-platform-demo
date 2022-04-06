@@ -39,7 +39,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->group(['prefix' => 'resources'], function () use ($router) {
             $router->get('list', 'ResourceController@index');
             $router->post('add', 'ResourceController@store');
-            $router->put('edit/{id}', 'ResourceController@edit');
+            $router->get('edit/{id}', 'ResourceController@edit');
+            $router->get('categories', 'ResourceController@getCategories');
             $router->post('update', 'ResourceController@update');
             $router->delete('delete/{id}', 'ResourceController@delete');
         });

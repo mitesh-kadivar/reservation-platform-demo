@@ -6,6 +6,11 @@
     </nb-card-header>
   
     <nb-card-body>
-      <ng2-smart-table [source]='source' [settings]='settings'></ng2-smart-table>
+      <ng2-smart-table
+        [source]='source'
+        (delete)="onDelete($event)"
+        (edit)="onEditResource($event, 'edit')"
+        [settings]='settings'
+      ></ng2-smart-table>
     </nb-card-body>
 </nb-card>

@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { SmartTableData } from '../../../@core/data/smart-table';
 import { ResourcesService } from '../resources.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-index',
@@ -66,12 +67,32 @@ export class IndexComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private resourceService: ResourcesService) { }
+  constructor(private service: SmartTableData, private resourceService: ResourcesService, private router: Router) { }
 
   getAllData() {
     this.resourceService.getAllResources().subscribe((res: any) => {
       this.source.load(res.data);
     });
+  }
+
+  onEditResource(event, eventName: string): void {
+    let resourceId = btoa(event.data.id);
+    this.router.navigate(['/pages/resources/edit/', resourceId]);
+  }
+
+  onDelete(event): void {
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.resourceService.deleteResource(event.data.id).subscribe((res : any) => {
+        if (res.meta.status === true) {
+          this.formError = res.meta.message;
+          this.statusType = 'success';
+          this.getAllData();
+        } else {
+          this.formError = res.meta.message;
+          this.statusType = 'danger';
+        }
+      })
+    }
   }
 
 }

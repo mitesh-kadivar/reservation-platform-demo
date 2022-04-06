@@ -11,4 +11,5 @@ return [
     'ADMIN_UPDATE'           => 'You cann\'t update admin user',
     'ADMIN_DELETE'           => 'You cann\'t delete admin user',
     'RESOURCE_DOES_NOT_EXIST'=> "Resource does not exist",
+    'NO_CATEGORIES'          => "No categories found",
 ];
