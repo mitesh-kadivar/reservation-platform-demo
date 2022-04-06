@@ -51,15 +51,15 @@ export class IndexComponent implements OnInit {
         title: 'Description',
         type: 'text'
       },
-      profile: {
-        title: 'Profile',
-        filter: false,
-        type: 'html',
-        valuePrepareFunction: (profile) => {
-          this.imagePath =  (profile) ? environment.imagePath + profile : environment.imagePath + "../../default-user.png";
-          return `<img class='table-thumbnail-img' src="${this.imagePath}" width="50" height="50"/>`
-        }
-      },
+      // profile: {
+      //   title: 'Profile',
+      //   filter: false,
+      //   type: 'html',
+      //   valuePrepareFunction: (profile) => {
+      //     this.imagePath =  (profile) ? environment.imagePath + profile : environment.imagePath + "../../default-user.png";
+      //     return `<img class='table-thumbnail-img' src="${this.imagePath}" width="50" height="50"/>`
+      //   }
+      // },
     },
   };
 

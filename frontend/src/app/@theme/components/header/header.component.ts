@@ -7,6 +7,8 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
+import { getAuthenticatedUserData } from '../../../auth/authManager';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ngx-header',
@@ -58,6 +60,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
+
+      const userData = getAuthenticatedUserData();
+      const profile = (userData.profile) ? environment.imagePath + userData.profile : environment.imagePath + "../../default-user.png";
+      this.user = {
+        name: userData.name,
+        picture: profile
+      }
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

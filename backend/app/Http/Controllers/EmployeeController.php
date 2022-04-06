@@ -28,7 +28,10 @@ class EmployeeController extends Controller
             if (Cache::has('users') && (User::count() == Cache::get('users')->count())) {
                 $users = Cache::get('users');
             } else {
-                $users = User::select('id', 'name', 'email', 'description', 'profile')->latest()->get();
+                $users = User::select('id', 'name', 'email', 'description', 'profile')
+                                ->latest()
+                                ->where('is_type', 2)
+                                ->get();
                 Cache::add('users', $users);
             }
             return $this->success($users, "EMPLOYEES_LIST");
