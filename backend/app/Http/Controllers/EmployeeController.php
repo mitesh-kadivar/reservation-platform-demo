@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Events\EmailNotificationEvent;
+use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 
 class EmployeeController extends Controller
@@ -23,7 +24,13 @@ class EmployeeController extends Controller
     public function index() : JsonResponse
     {
         try {
-            $users = User::select('id', 'name', 'email', 'description', 'profile')->latest()->get();
+            # Check the records in cache
+            if (Cache::has('users') && (User::count() == Cache::get('users')->count())) {
+                $users = Cache::get('users');
+            } else {
+                $users = User::select('id', 'name', 'email', 'description', 'profile')->latest()->get();
+                Cache::add('users', $users);
+            }
             return $this->success($users, "EMPLOYEES_LIST");
         } catch (\Exception $ex) {
             return $this->error($ex->getMessage());
@@ -83,6 +90,7 @@ class EmployeeController extends Controller
                     'slug'          => 'send_login_credentials',
                 ];
                 event(new EmailNotificationEvent($model));
+                Cache::forget('users');
                 return $this->success($user, "EMPLOYEE_INSERTED");
             }
         } catch (\Exception $ex) {
@@ -151,6 +159,7 @@ class EmployeeController extends Controller
             if (!$user->save()) {
                 return $this->error("ERROR");
             }
+            Cache::forget('users');
             return $this->success($user, "EMPLOYEE_UPDATED");
         } catch (\Exception $ex) {
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
@@ -178,6 +187,7 @@ class EmployeeController extends Controller
                 unlink(public_path(config('config.user.profile_image_path'). $user->profile));
             }
             if ($user->delete()) {
+                Cache::forget('users');
                 return $this->success([], "EMPLOYEE_DELETED");
             } else {
                 return $this->error("ERROR");
