@@ -45,5 +45,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('update', 'ResourceController@update');
             $router->delete('delete/{id}', 'ResourceController@delete');
         });
+
+        # Booking
+        $router->group(['prefix' => 'booking'], function () use ($router) {
+            $router->post('add', 'BookinController@addBooking');
+        });
     });
 });

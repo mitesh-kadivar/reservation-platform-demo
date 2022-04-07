@@ -33,6 +33,12 @@ const routes: Routes = [{
         .then(m => m.ResourcesModule),
     },
     {
+      path: 'booking',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('./booking/booking.module')
+        .then(m => m.BookingModule),
+    },
+    {
       path: 'tables',
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),

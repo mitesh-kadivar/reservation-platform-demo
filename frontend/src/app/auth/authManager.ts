@@ -23,3 +23,11 @@ export const getUserType = () => {
         return "ADMIN";
     }
 }
+
+export const changeFormater = (date) => {
+    let selectedDateTime = date.split('T');
+    selectedDateTime[1] += ":00";
+
+    let orignalDateTime = selectedDateTime[0] +' '+ selectedDateTime[1];
+    return orignalDateTime;
+  }

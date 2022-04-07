@@ -16,7 +16,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Manage Booking',
     icon: 'shopping-cart-outline',
-    link: '/pages/iot-dashboard',
+    link: '/pages/booking/resource-book',
   },
   {
     title: 'Profile management',

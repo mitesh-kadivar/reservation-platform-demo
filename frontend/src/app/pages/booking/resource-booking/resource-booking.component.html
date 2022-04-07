@@ -1,0 +1,36 @@
+<div class="col-md-12">
+    <nb-card>
+    <nb-card-header>Book Resource </nb-card-header>
+    <nb-card-body>
+        <form [formGroup]="resourceBookForm" (ngSubmit)="resourceBook()">
+        <div class="form-group">
+            <label for="name" class="label">Start Date*</label><br />
+            <input type="datetime-local" id="startDate" nbInput fullWidth name="start_date" formControlName="start_date" autocomplete="off">
+            <div *ngIf="(getControl.start_date.touched || submitted) && getControl.start_date.invalid" class="text-danger">
+                <div *ngIf="getControl.start_date.errors && getControl.start_date.errors.required">Start date-time is required!</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="label">End Date*</label><br/>
+            <input type="datetime-local" id="endDate" nbInput fullWidth name="end_date" formControlName="end_date" autocomplete="off">
+            <div *ngIf="(getControl.end_date.touched || submitted) && getControl.end_date.invalid" class="text-danger">
+                <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.required">End date-time is required!</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="resource" class="label">Resource*</label>
+            <nb-select fullWidth name="resource" id="resource" fullWidth formControlName="resource" placeholder="resource">
+                <nb-option [value]="resource.id" *ngFor="let resource of allResources">
+                    {{ resource.title }}
+                </nb-option>
+            </nb-select>
+            <div *ngIf="(getControl.resource.touched || submitted) && getControl.resource.invalid" class="text-danger">
+                <div *ngIf="getControl.resource.errors && getControl.resource.errors.required">Resource is required!</div>
+            </div>
+        </div>
+        <button type="submit" nbButton status="danger" [class.btn-primary]="resourceBookForm.valid" [class.btn-secondary]="!resourceBookForm.valid"
+          class="btn btn-block">Submit</button>
+        </form>
+    </nb-card-body>
+    </nb-card>
+</div>
