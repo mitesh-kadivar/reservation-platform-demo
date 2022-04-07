@@ -14,3 +14,12 @@ export const clearUserData = () => {
 export const saveUserData = (userData: any) => {
     localStorage.setItem('user_data', JSON.stringify(userData));
 }
+
+export const getUserType = () => {
+    let user = JSON.parse(localStorage.getItem('user_data'));
+    if (user.is_type == 2) {
+        return "USER";
+    } else {
+        return "ADMIN";
+    }
+}

@@ -7,23 +7,24 @@ import { getUserType } from './authManager';
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedInAuthGuard implements CanActivate {
-  
-  constructor(private authService: AuthService, private router: Router) {}
+export class IsAdminGuard implements CanActivate {
 
+  constructor(private authService: AuthService, private router: Router) {}
+  
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn()) {
-      if (getUserType() != 'USER') {
-        this.router.navigate(['/pages/employees/index'])
-      } else {
-        this.router.navigate(['/pages/resources/index'])
-      }
-        return false
-    } else {
-        return true
+    const url: string = state.url;
+    return this.isUserAdmin(url);
+  }
+
+  isUserAdmin(url: string) {
+    if ((getUserType() == 'ADMIN')) {
+      return true;
     }
+
+    this.authService.redirectUrl = url;
+    this.router.navigate(['/pages/resources/index'], {queryParams: { returnUrl: url }} );
   }
   
 }

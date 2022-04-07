@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NbAuthService, NbLoginComponent, NB_AUTH_OPTIONS } from '@nebular/auth';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
-import { saveAuthentication } from '../auth/authManager';
+import { getUserType, saveAuthentication } from '../auth/authManager';
 
 @Component({
   selector: 'ngx-login',
@@ -65,7 +65,11 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
         localStorage.removeItem('remembe_password');
         this.cookie = false;
       }
+      if (getUserType() != 'USER') {
        this.router.navigate(['/pages/employees/index']);
+      } else {
+        this.router.navigate(['/pages/resources/index'])
+      }
        this.statusType = 'success';
       }
     });
