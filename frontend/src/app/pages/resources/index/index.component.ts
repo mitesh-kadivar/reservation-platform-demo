@@ -4,6 +4,7 @@ import { SmartTableData } from '../../../@core/data/smart-table';
 import { ResourcesService } from '../resources.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
+import { getUserType } from '../../../auth/authManager';
 
 @Component({
   selector: 'ngx-index',
@@ -15,6 +16,7 @@ export class IndexComponent implements OnInit {
   imagePath: string;
   formError: any = null;
   statusType: any;
+  userType: string;
 
   settings = {
     // hideSubHeader: true,
@@ -34,7 +36,9 @@ export class IndexComponent implements OnInit {
       confirmDelete: true,
     },
     actions: {
-      add: false
+      add: false,
+      edit: false,
+      delete: false,
     },
     columns: {
       title: {
@@ -63,6 +67,9 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllData();
+    this.userType = getUserType();
+    this.settings.actions.edit = (this.userType == 'ADMIN') ? true : false;
+    this.settings.actions.delete = (this.userType == 'ADMIN') ? true : false;
   }
 
   source: LocalDataSource = new LocalDataSource();

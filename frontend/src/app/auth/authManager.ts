@@ -30,4 +30,4 @@ export const changeFormater = (date) => {
 
     let orignalDateTime = selectedDateTime[0] +' '+ selectedDateTime[1];
     return orignalDateTime;
-  }
+}
