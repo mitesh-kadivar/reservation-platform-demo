@@ -40,8 +40,13 @@ export class ResourcesService {
     return this.httpClient.get<Resource>(environment.baseURL + 'resources/edit/' + id, {'headers':this.headers})
   }
 
-  update(id: number, resource: Resource): Observable<Resource> {
+  update(resource: Resource): Observable<Resource> {
     this.headers = this.getHeaderData();
-    return this.httpClient.put<Resource>(environment.baseURL + 'employees/update/' + id, resource, {'headers':this.headers})
+    return this.httpClient.post<Resource>(environment.baseURL + 'resources/update', resource, {'headers':this.headers})
+  }
+
+  createResource(resource: Resource): Observable<Resource> {
+    this.headers = this.getHeaderData();
+    return this.httpClient.post<Resource>(environment.baseURL + 'resources/add', resource, {'headers': this.headers});
   }
 }

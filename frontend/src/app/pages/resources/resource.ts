@@ -1,6 +1,6 @@
 export interface Resource {
     id: number,
     title: string,
-    category: number,
+    category_id: number,
     image: File,
 }

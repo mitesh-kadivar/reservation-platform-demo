@@ -65,12 +65,12 @@ export class EditComponent implements OnInit {
 
     if (this.editRegisterForm.valid) {
       let updatableData = {
-        id: null,
+        id: this.resourceId,
         title: this.editRegisterForm.value.title,
-        category: this.editRegisterForm.value.category,
+        category_id: this.editRegisterForm.value.category,
         image: this.imageSrc,
       };
-      this.resourcesService.update(this.resourceId, updatableData).subscribe((res: any) => {
+      this.resourcesService.update(updatableData).subscribe((res: any) => {
         this.formError = res.meta.message;
         if (res.meta.status === false) {
           this.statusType = 'danger';

@@ -25,12 +25,10 @@ return [
         'add_resource' => [
             'title'       => 'required',
             'category_id' => 'required|exists:categories,id',
-            'image'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ],
         'update_resource' => [
             'title'       => 'required',
             'category_id' => 'required|exists:categories,id',
-            'image'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]
     ],
     'book' => [
