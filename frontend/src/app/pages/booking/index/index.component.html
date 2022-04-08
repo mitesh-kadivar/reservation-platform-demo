@@ -1,0 +1,12 @@
+<nb-card>
+    <nb-card-header>
+      Booking History
+      <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
+      <a class="btn btn-warning btn-sm float-right" routerLink="/pages/booking/resource-book"><i class="fa fa-plus-circle fa-2x"></i></a>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source">
+      </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

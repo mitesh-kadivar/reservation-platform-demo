@@ -15,10 +15,11 @@ export class ResourceBookingComponent implements OnInit {
   allResources: any;
   resourceBookForm: FormGroup;
   submitted: boolean = false;
-  formError: boolean = null;
+  formError: any = null;
   user_id: any;
   userData: any;
   statusType: any;
+  status: boolean = false;
 
   constructor(private resourcesService: ResourcesService, public formBuilder: FormBuilder, private router: Router, private bookingService: BookingService) { }
 
@@ -50,20 +51,28 @@ export class ResourceBookingComponent implements OnInit {
         end_date: changeFormater(this.resourceBookForm.value.end_date),
         resource: this.resourceBookForm.value.resource,
       }
-      
-      this.bookingService.resourceBook(updatableData).subscribe((res:any) => {
-        console.log(res);
-        if (res.meta.status === false) {
-          this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
-          this.statusType = 'danger';
+
+      // Check Resource avilable or not
+      this.bookingService.checkResourceBooked(updatableData).subscribe((res: any) => {
+        if (res.meta.status === true) {   // true: avilable  false: booked
+          this.bookingService.resourceBook(updatableData).subscribe((res:any) => {
+            if (res.meta.status === false) {
+              this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
+              this.statusType = 'danger';
+            } else {
+             this.formError = res.meta.message;
+             this.statusType = 'success';
+             this.router.navigateByUrl('/pages/booking/index');
+            }
+          }, error => {
+            this.formError = JSON.stringify(error.error) || error;
+          })
         } else {
-         this.formError = res.meta.message;
-         this.statusType = 'success';
-         this.router.navigateByUrl('pages/employees/index');
+          this.formError = "Already resource is booked";
+          this.statusType = 'danger';
+          this.router.navigateByUrl('/pages/booking/index');
         }
-      }, error => {
-        this.formError = JSON.stringify(error.error) || error;
-      })
+      });
     }
   }
 

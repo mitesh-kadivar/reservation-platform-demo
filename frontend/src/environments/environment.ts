@@ -12,4 +12,5 @@ export const environment = {
   production: false,
   baseURL: 'http://local.res_platform.com/api/',
   imagePath: 'http://local.reservation.in/images/avatar/',
+  resourceImagePath: 'http://local.reservation.in/images/resource/',
 };

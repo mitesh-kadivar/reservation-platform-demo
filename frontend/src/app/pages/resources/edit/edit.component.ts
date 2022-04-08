@@ -34,7 +34,7 @@ export class EditComponent implements OnInit {
 
     this.resourcesService.find(this.resourceId).subscribe((res: any)=>{
       this.resource = res.data;
-      this.resource.image = (this.resource.image) ? environment.imagePath + this.resource.image : environment.imagePath + "../../default-user.png";
+      this.resource.image = (this.resource.image) ? environment.resourceImagePath + this.resource.image : environment.resourceImagePath + "../../default-user.png";
       this.editRegisterForm.get('category').setValue(this.resource.category_id);
     });
 

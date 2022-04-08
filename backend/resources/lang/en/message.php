@@ -15,5 +15,8 @@ return [
     'RESOURCE_DELETED'         => "The resource is deleted successfully",
     'EMPLOYEE_UPDATED'         => 'Empoyee has been updated successfully',
     'EMPLOYEE_PROFILE_UPDATED' => 'Empoyee profile updated successfully',
-    'CATEGORIES_LIST'          => "List of categories",
+    'CATEGORIES_LIST'          => 'List of categories',
+    'ORDER_BOOKED'             => 'Resource booked successfully',
+    'AVAILABLE_RESOURCE'       => 'Resource available',
+    'BOOKING_LIST'             => 'List of booking orders',
 ];

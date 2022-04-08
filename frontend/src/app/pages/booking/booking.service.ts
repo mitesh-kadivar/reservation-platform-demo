@@ -16,6 +16,16 @@ export class BookingService {
     return this.httpClient.post<any>(environment.baseURL+`booking/add`, postData,{'headers':this.headers});
   }
 
+  checkResourceBooked(postData: any) {
+    this.headers = this.getHeaderData();
+    return this.httpClient.post<any>(environment.baseURL+`booking/resource-booked`, postData,{'headers':this.headers});
+  }
+
+  getBookingOrders() {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get(environment.baseURL + `booking/list`, {'headers':this.headers});
+  }
+
   getHeaderData() {
     this.headers = new HttpHeaders().set('Content-Type', 'application/json');
     let token    = this.authService.getBearerToken();

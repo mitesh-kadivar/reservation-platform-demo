@@ -37,6 +37,11 @@ return [
             'start_date' => 'required',
             'end_date'   => 'required',
             'resource'   => 'required',
-        ]
+        ],
+        'is_resource_booked' => [
+            'start_date' => 'required',
+            'end_date'   => 'required',
+            'resource'   => 'required',
+        ],
     ]
 ];

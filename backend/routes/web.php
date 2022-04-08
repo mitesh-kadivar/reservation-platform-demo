@@ -48,7 +48,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         # Booking
         $router->group(['prefix' => 'booking'], function () use ($router) {
-            $router->post('add', 'BookinController@addBooking');
+            $router->post('add', 'BookingController@addBooking');
+            $router->post('resource-booked', 'BookingController@isResourceBooked');
+            $router->get('list', 'BookingController@index');
         });
     });
 });

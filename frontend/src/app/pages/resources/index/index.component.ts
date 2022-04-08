@@ -53,12 +53,12 @@ export class IndexComponent implements OnInit {
           return (categories) ? categories.title : "No Category";
         }
       },
-      profile: {
+      image: {
         title: 'Image',
         filter: false,
         type: 'html',
-        valuePrepareFunction: (profile) => {
-          this.imagePath =  (profile) ? environment.imagePath + profile : environment.imagePath + "../../default-user.png";
+        valuePrepareFunction: (image) => {
+          this.imagePath =  (image) ? environment.resourceImagePath + image : environment.resourceImagePath + "../../default-user.png";
           return `<img class='table-thumbnail-img' src="${this.imagePath}" width="50" height="50"/>`
         }
       },
@@ -78,6 +78,7 @@ export class IndexComponent implements OnInit {
 
   getAllData() {
     this.resourceService.getAllResources().subscribe((res: any) => {
+      console.log(res.data);
       this.source.load(res.data);
     });
   }
