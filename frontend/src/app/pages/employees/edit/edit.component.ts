@@ -73,7 +73,7 @@ export class EditComponent implements OnInit {
         } else {
          this.formError = res.meta.message;
          this.statusType = 'success';
-         this.router.navigateByUrl('pages/employees/index');
+         this.router.navigateByUrl('pages/employees/index?status=edit_successful');
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;

@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingOrder;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Events\EmailNotificationEvent;
 
 class BookingController extends Controller
 {
@@ -55,6 +57,17 @@ class BookingController extends Controller
             $order->end_date    = $request->end_date;
 
             if ($order->save()) {
+                $createdOrder = BookingOrder::with(['resource', 'user'])->whereId($order->id)->first();
+                $model = [
+                    'to_email'   => trim($createdOrder->user->email),
+                    'user_name'  => trim($createdOrder->user->name),
+                    'resource'   => trim($createdOrder->resource->title),
+                    'start_date' => $request->start_date,
+                    'end_date'   => $request->end_date,
+                    'slug'       => 'resource_booked',
+                ];
+                event(new EmailNotificationEvent($model));
+
                 return $this->success($order, "ORDER_BOOKED");
             }
         } catch (\Exception $ex) {

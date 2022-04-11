@@ -62,7 +62,7 @@ export class ResourceBookingComponent implements OnInit {
             } else {
              this.formError = res.meta.message;
              this.statusType = 'success';
-             this.router.navigateByUrl('/pages/booking/index');
+             this.router.navigateByUrl('/pages/booking/index?status=add_successful');
             }
           }, error => {
             this.formError = JSON.stringify(error.error) || error;

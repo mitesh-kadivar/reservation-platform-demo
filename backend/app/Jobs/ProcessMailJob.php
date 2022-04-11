@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmployeePasswordEmail;
+use App\Mail\SendResourceBookedEmail;
 use Log;
 
 class ProcessMailJob extends Job
@@ -35,6 +36,9 @@ class ProcessMailJob extends Job
         if ($slug == 'send_login_credentials') {
             $this->sendEmployeeCredentials();
         }
+        if ($slug == 'resource_booked') {
+            $this->sendResourceBooked();
+        }
     }
 
     /**
@@ -46,5 +50,16 @@ class ProcessMailJob extends Job
     {
         Mail::to($this->model['to_email'])
                 ->send(new SendEmployeePasswordEmail($this->model));
+    }
+
+    /**
+     * Send mail to employee for resource booking confirmation.
+     *
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     */
+    private function sendResourceBooked()
+    {
+        Mail::to($this->model['to_email'])
+                ->send(new SendResourceBookedEmail($this->model));
     }
 }

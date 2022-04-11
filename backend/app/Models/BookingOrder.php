@@ -17,6 +17,6 @@ class BookingOrder extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class)->select('name', 'id');
+        return $this->belongsTo(User::class)->select('name', 'email', 'id');
     }
 }
