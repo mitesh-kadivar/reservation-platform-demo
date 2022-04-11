@@ -70,7 +70,7 @@ export class ResourceBookingComponent implements OnInit {
         } else {
           this.formError = "Already resource is booked";
           this.statusType = 'danger';
-          this.router.navigateByUrl('/pages/booking/index');
+          this.router.navigateByUrl('/pages/booking/resource-book');
         }
       });
     }

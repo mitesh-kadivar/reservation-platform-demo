@@ -69,7 +69,7 @@ class BookingController extends Controller
      * @return  JsonResponse
      */
 
-    public function isResourceBooked(Request $request)
+    public function isResourceBooked(Request $request) : JsonResponse
     {
         $validator = Validator::make($request->all(), config('validator.book.is_resource_booked'));
         if ($validator->fails()) {
@@ -78,9 +78,11 @@ class BookingController extends Controller
 
         try {
             $order = BookingOrder::where('resource_id', $request->resource)
-            ->where([['start_date','<=',$request->start_date],['end_date','>=',$request->end_date]])
-            ->orwhereBetween('start_date', array($request->start_date,$request->end_date))
-            ->orWhereBetween('end_date', array($request->start_date,$request->end_date))->get();
+            ->where(function ($query) use ($request) {
+                      $query->where([['start_date','<=',$request->start_date],['end_date','>=',$request->end_date]])
+                      ->orwhereBetween('start_date', array($request->start_date,$request->end_date))
+                      ->orWhereBetween('end_date', array($request->start_date,$request->end_date));
+            })->get();
 
             if ($order->count() > 0) {
                 return $this->error("ALREADY_BOOKED");
@@ -88,7 +90,7 @@ class BookingController extends Controller
                 return $this->success([], "AVAILABLE_RESOURCE");
             }
         } catch (\Exception $ex) {
-            return $this->error($ex->getCode() == 423);
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
     }
 }
