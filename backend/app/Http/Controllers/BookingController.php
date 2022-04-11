@@ -118,4 +118,25 @@ class BookingController extends Controller
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
         }
     }
+
+    /**
+     * Get orders history
+     *
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+
+    public function getOrderHistory() : JsonResponse
+    {
+        try {
+            $order = BookingOrder::with(['resource', 'user'])->get();
+            foreach ($order as $value) {
+                $value->resource_name = $value->resource->title;
+                $value->employee_name = $value->user->name;
+            }
+            return $this->success($order, "BOOKING_LIST");
+        } catch (\Exception $ex) {
+            return $this->error($ex->getMessage());
+        }
+    }
 }

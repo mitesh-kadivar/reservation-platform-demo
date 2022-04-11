@@ -8,13 +8,15 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ResourceBookingComponent } from './resource-booking/resource-booking.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
+import { HistoryComponent } from './history/history.component';
 
 
 @NgModule({
   declarations: [
     BookingComponent,
     ResourceBookingComponent,
-    IndexComponent
+    IndexComponent,
+    HistoryComponent
   ],
   imports: [
     CommonModule,

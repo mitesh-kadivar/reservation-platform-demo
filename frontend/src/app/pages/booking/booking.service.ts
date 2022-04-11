@@ -31,6 +31,11 @@ export class BookingService {
     return this.httpClient.delete(environment.baseURL + `booking/cancel/` + id, {'headers':this.headers});
   }
 
+  getOrderHistory() {
+    this.headers = this.getHeaderData();
+    return this.httpClient.get(environment.baseURL + `booking/order-history`, {'headers':this.headers});
+  }
+
   getHeaderData() {
     this.headers = new HttpHeaders().set('Content-Type', 'application/json');
     let token    = this.authService.getBearerToken();

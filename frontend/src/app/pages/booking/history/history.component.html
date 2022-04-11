@@ -1,0 +1,11 @@
+<nb-card>
+    <nb-card-header>
+      History
+      <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

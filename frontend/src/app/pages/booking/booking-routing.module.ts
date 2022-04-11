@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAdminGuard } from '../../auth/is-admin.guard';
 import { BookingComponent } from './booking.component';
+import { HistoryComponent } from './history/history.component';
 import { IndexComponent } from './index/index.component';
 import { ResourceBookingComponent } from './resource-booking/resource-booking.component';
 
@@ -15,6 +17,11 @@ const routes: Routes = [{
     {
       path: 'index',
       component: IndexComponent,
+    },
+    {
+      path: 'history',
+      canActivate: [IsAdminGuard],
+      component: HistoryComponent,
     }
   ],
 }];

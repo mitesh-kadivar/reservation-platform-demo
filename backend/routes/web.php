@@ -52,6 +52,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('resource-booked', 'BookingController@isResourceBooked');
             $router->get('list', 'BookingController@index');
             $router->delete('cancel/{id}', 'BookingController@cancelResourceBookedOrder');
+            $router->get('order-history', 'BookingController@getOrderHistory');
         });
     });
 });
