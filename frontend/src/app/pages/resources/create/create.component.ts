@@ -47,9 +47,6 @@ export class CreateComponent implements OnInit {
 
       reader.onload = () => {
         this.imageSrc = reader.result as string;
-        this.registerForm.patchValue({
-          image: this.imageSrc
-        });
       };
     }
   }
@@ -58,14 +55,19 @@ export class CreateComponent implements OnInit {
     this.submitted = true;
 
     if (this.registerForm.valid) {
-      this.resourceService.createResource(this.registerForm.value).subscribe((res:any) => {
+      let resourceData =  {
+        title: this.registerForm.get('title').value,
+        category_id: this.registerForm.get('category_id').value,
+        image: this.imageSrc,
+      };
+      this.resourceService.createResource(resourceData).subscribe((res:any) => {
         if (res.meta.status === false) {
           this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
           this.statusType = 'danger';
         } else {
          this.formError = res.meta.message;
          this.statusType = 'success';
-         this.router.navigateByUrl('pages/resources/index');
+         this.router.navigateByUrl('pages/resources/index?status=add_successful');
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;

@@ -38,13 +38,22 @@ class ResourceController extends Controller
             return $this->validationError($validator, $validator->messages()->first());
         }
 
+        if ($request->image) {
+            directoryObserver(config('config.resource.resource_image_path'));
+            $image =  $request->image;
+            $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+            \Storage::disk('local')->putFileAs(config('config.resource.resource_image_path'), $image, $name);
+
+            $uploadedImage = $name;
+        }
+
         try {
             $resource              = new Resource();
             $resource->title       = $request->title;
             $resource->category_id = $request->category_id;
 
             if (isset($request->image)) {
-                $resource->image   = $request->image;
+                $resource->image   = $uploadedImage;
             }
 
             $resource->save();

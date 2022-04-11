@@ -14,7 +14,7 @@ import { getUserType } from '../../../auth/authManager';
 export class IndexComponent implements OnInit {
 
   imagePath: string;
-  formError: any = null;
+  formStatus: any = null;
   statusType: any;
   userType: string;
 
@@ -78,7 +78,6 @@ export class IndexComponent implements OnInit {
 
   getAllData() {
     this.resourceService.getAllResources().subscribe((res: any) => {
-      console.log(res.data);
       this.source.load(res.data);
     });
   }
@@ -92,15 +91,19 @@ export class IndexComponent implements OnInit {
     if (window.confirm('Are you sure you want to delete?')) {
       this.resourceService.deleteResource(event.data.id).subscribe((res : any) => {
         if (res.meta.status === true) {
-          this.formError = res.meta.message;
+          this.formStatus = res.meta.message;
           this.statusType = 'success';
           this.getAllData();
         } else {
-          this.formError = res.meta.message;
+          this.formStatus = res.meta.message;
           this.statusType = 'danger';
         }
       })
     }
+  }
+
+  closeAlert(): void {
+    this.formStatus = false;
   }
 
 }

@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header>
     Manage Resources
-    <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
+    <nb-alert *ngIf="formStatus" [status]="statusType" closable (close)="closeAlert()">{{ formStatus }}</nb-alert>
     <a *ngIf="userType === 'ADMIN'" class="btn btn-warning btn-sm float-right" routerLink="/pages/resources/create">
       <i class="fa fa-plus-circle fa-2x"></i>
     </a>

@@ -45,7 +45,7 @@ export class ResourcesService {
     return this.httpClient.post<Resource>(environment.baseURL + 'resources/update', resource, {'headers':this.headers})
   }
 
-  createResource(resource: Resource): Observable<Resource> {
+  createResource(resource: any): Observable<Resource> {
     this.headers = this.getHeaderData();
     return this.httpClient.post<Resource>(environment.baseURL + 'resources/add', resource, {'headers': this.headers});
   }
