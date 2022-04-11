@@ -65,4 +65,18 @@ export class IndexComponent implements OnInit {
     });
   }
 
+  onDelete(event): void {
+    if (window.confirm('Are you sure you want to cancel this booked resource?')) {
+      this.bookingService.cancelOrder(event.data.id).subscribe((res : any) => {
+        if (res.meta.status === true) {
+          this.formError = res.meta.message;
+          this.statusType = 'success';
+          this.getAllData();
+        } else {
+          this.formError = res.meta.message;
+          this.statusType = 'danger';
+        }
+      })
+    }
+  }
 }

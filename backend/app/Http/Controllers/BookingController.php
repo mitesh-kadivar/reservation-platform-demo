@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookingOrder;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -21,7 +22,7 @@ class BookingController extends Controller
     public function index() : JsonResponse
     {
         try {
-            $order = BookingOrder::with('resource')->get();
+            $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->get();
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;
             }
@@ -88,6 +89,30 @@ class BookingController extends Controller
                 return $this->error("ALREADY_BOOKED");
             } else {
                 return $this->success([], "AVAILABLE_RESOURCE");
+            }
+        } catch (\Exception $ex) {
+            return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
+        }
+    }
+
+    /**
+     * Cancel Resource Booked order.
+     *
+     * @param   Request $request
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+    public function cancelResourceBookedOrder(Request $request) : JsonResponse
+    {
+        $order = BookingOrder::whereId($request->id)->first();
+        if ($order === null) {
+            return $this->error("NOT_FOUND");
+        }
+        try {
+            if ($order->delete()) {
+                return $this->success([], "ORDER_CANCELLED");
+            } else {
+                return $this->error("ERROR");
             }
         } catch (\Exception $ex) {
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');

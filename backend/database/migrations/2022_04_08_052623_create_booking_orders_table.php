@@ -19,7 +19,6 @@ class CreateBookingOrdersTable extends Migration
             $table->unsignedBigInteger('resource_id');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
 

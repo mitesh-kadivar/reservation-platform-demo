@@ -19,4 +19,5 @@ return [
     'ORDER_BOOKED'             => 'Resource booked successfully',
     'AVAILABLE_RESOURCE'       => 'Resource available',
     'BOOKING_LIST'             => 'List of booking orders',
+    'ORDER_CANCELLED'          => 'Resource order cancelled successfully'
 ];
