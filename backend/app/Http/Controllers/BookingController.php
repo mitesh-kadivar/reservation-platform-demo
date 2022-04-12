@@ -124,6 +124,18 @@ class BookingController extends Controller
             return $this->error("NOT_FOUND");
         }
         try {
+            $cancelOrder = BookingOrder::with(['resource', 'user'])->whereId($request->id)->first();
+            $adminUser   = User::select('email')->where('is_type', 1)->first();
+            $model = [
+                'admin_user' => trim($adminUser->email),
+                'to_email'   => trim($cancelOrder->user->email),
+                'user_name'  => trim($cancelOrder->user->name),
+                'resource'   => trim($cancelOrder->resource->title),
+                'start_date' => $cancelOrder->start_date,
+                'end_date'   => $cancelOrder->end_date,
+                'slug'       => 'cancel_resource_booked_order',
+            ];
+            event(new EmailNotificationEvent($model));
             if ($order->delete()) {
                 return $this->success([], "ORDER_CANCELLED");
             } else {

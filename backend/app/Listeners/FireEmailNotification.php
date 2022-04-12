@@ -37,6 +37,9 @@ class FireEmailNotification
         if ($slug == 'resource_booked') {
             $this->resourceBooked($event->model);
         }
+        if ($slug == 'cancel_resource_booked_order') {
+            $this->cancelResourceBookedOrder($event->model);
+        }
     }
 
     /**
@@ -59,6 +62,18 @@ class FireEmailNotification
      * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
      */
     private function resourceBooked($data)
+    {
+        dispatch(new ProcessMailJob($data));
+    }
+
+    /**
+     * Call the queue to send cancel resource order to user and admin
+     * Used for send property transition document
+     *
+     * @param   mixed $data
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     */
+    private function cancelResourceBookedOrder($data)
     {
         dispatch(new ProcessMailJob($data));
     }

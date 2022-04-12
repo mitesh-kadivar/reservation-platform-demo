@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmployeePasswordEmail;
 use App\Mail\SendResourceBookedEmail;
 use App\Mail\SendBookedEmailToAdmin;
+use App\Mail\CancelOrderUserEmail;
+use App\Mail\CancelOrderAdminEmail;
 use Log;
 
 class ProcessMailJob extends Job
@@ -40,6 +42,9 @@ class ProcessMailJob extends Job
         if ($slug == 'resource_booked') {
             $this->sendResourceBooked();
         }
+        if ($slug == 'cancel_resource_booked_order') {
+            $this->cancelResourceOrder();
+        }
     }
 
     /**
@@ -66,5 +71,20 @@ class ProcessMailJob extends Job
         #admin
         Mail::to($this->model['admin_user'])
                 ->send(new SendBookedEmailToAdmin($this->model));
+    }
+
+    /**
+     * Send mail to user and admin for cancel resource order.
+     *
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     */
+    private function cancelResourceOrder()
+    {
+        Mail::to($this->model['to_email'])
+                ->send(new CancelOrderUserEmail($this->model));
+
+        #admin
+        Mail::to($this->model['admin_user'])
+                ->send(new CancelOrderAdminEmail($this->model));
     }
 }
