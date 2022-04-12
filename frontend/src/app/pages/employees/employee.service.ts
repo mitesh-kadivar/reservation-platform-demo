@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
 import { Employee } from './employee';
@@ -11,7 +11,21 @@ import { Employee } from './employee';
 export class EmployeeService {
 
   headers: any;
-  constructor(private httpClient: HttpClient, private authService: AuthService) { }
+  avatar$: BehaviorSubject<any>;
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
+    this.avatar$ = new BehaviorSubject({
+      name: "",
+      image: ""
+    });
+  }
+
+  getAvatar() {
+    return this.avatar$.asObservable();
+  }
+
+  setAvatar(value: any) {
+    this.avatar$.next(value);
+  }
 
   changePassword(postParameter:any) {
     // let headers = new HttpHeaders()

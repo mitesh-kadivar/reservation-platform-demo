@@ -70,6 +70,11 @@ export class ProfileComponent implements OnInit {
          this.statusType = 'success';
          clearUserData();
          saveUserData(res.data);
+         let userInfo = {
+           name: res.data.name,
+           image: res.data.profile
+         }
+         this.employeeService.setAvatar(userInfo);
          this.router.navigateByUrl('pages/employees/index');
         }
       }, error => {

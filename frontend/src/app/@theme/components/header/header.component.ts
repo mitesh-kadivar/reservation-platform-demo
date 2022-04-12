@@ -9,6 +9,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { getAuthenticatedUserData } from '../../../auth/authManager';
 import { environment } from '../../../../environments/environment';
+import { EmployeeService } from '../../../pages/employees/employee.service';
 
 @Component({
   selector: 'ngx-header',
@@ -51,7 +52,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private employeeService: EmployeeService) {
   }
 
   ngOnInit() {
@@ -62,7 +64,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((users: any) => this.user = users.nick);
 
       const userData = getAuthenticatedUserData();
-      const profile = (userData.profile) ? environment.imagePath + userData.profile : environment.imagePath + "../../default-user.png";
+      this.employeeService.getAvatar().subscribe(res => {
+        if (res) {
+          this.user.name    = res.name;
+          this.user.picture = environment.imagePath + res.image;
+        }
+      });
+      let profile = (userData.profile) ? environment.imagePath + userData.profile : environment.imagePath + "../../default-user.png";
       this.user = {
         name: userData.name,
         picture: profile
