@@ -58,7 +58,9 @@ class BookingController extends Controller
 
             if ($order->save()) {
                 $createdOrder = BookingOrder::with(['resource', 'user'])->whereId($order->id)->first();
+                $adminUser   = User::select('email')->where('is_type', 1)->first();
                 $model = [
+                    'admin_user' => trim($adminUser->email),
                     'to_email'   => trim($createdOrder->user->email),
                     'user_name'  => trim($createdOrder->user->name),
                     'resource'   => trim($createdOrder->resource->title),

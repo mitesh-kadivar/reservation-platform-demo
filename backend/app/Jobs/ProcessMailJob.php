@@ -5,6 +5,7 @@ namespace App\Jobs;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmployeePasswordEmail;
 use App\Mail\SendResourceBookedEmail;
+use App\Mail\SendBookedEmailToAdmin;
 use Log;
 
 class ProcessMailJob extends Job
@@ -61,5 +62,9 @@ class ProcessMailJob extends Job
     {
         Mail::to($this->model['to_email'])
                 ->send(new SendResourceBookedEmail($this->model));
+
+        #admin
+        Mail::to($this->model['admin_user'])
+                ->send(new SendBookedEmailToAdmin($this->model));
     }
 }
