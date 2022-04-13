@@ -4,7 +4,7 @@ import { getUserType } from '../auth/authManager';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Manage Employees',
-    icon: 'home-outline',
+    icon: 'person-outline',
     link: '/pages/employees/index',
     "hidden" : (getUserType() == 'USER') ? true:false
   },
