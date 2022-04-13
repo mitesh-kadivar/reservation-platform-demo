@@ -27,7 +27,6 @@ return [
             'category_id' => 'required|exists:categories,id',
         ],
         'update_resource' => [
-            'title'       => 'required|unique:resources,title',
             'category_id' => 'required|exists:categories,id',
         ]
     ],

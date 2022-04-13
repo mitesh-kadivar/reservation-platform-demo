@@ -9,8 +9,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
   baseURL: 'http://local.res_platform.com/api/',
-  imagePath: 'http://local.reservation.in/images/avatar/',
-  resourceImagePath: 'http://local.reservation.in/images/resource/',
+  imagePath: 'http://local.res_platform.com/images/avatar/',
+  production: false,
+  pagination: 5,
+  resourceImagePath: 'http://local.res_platform.com/images/resource/',
 };

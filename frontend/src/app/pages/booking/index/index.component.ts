@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, ServerDataSource } from 'ng2-smart-table';
+import { environment } from '../../../../environments/environment';
 import { SmartTableData } from '../../../@core/data/smart-table';
 import { BookingService } from '../booking.service';
 
@@ -49,19 +51,29 @@ export class IndexComponent implements OnInit {
         type: 'date'
       }
     },
+    pager: {
+      display: true,
+      perPage: environment.pagination
+    }
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  // source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
+  url = environment.baseURL + 'booking/list';
 
-  constructor(private service: SmartTableData, private bookingService: BookingService) { }
+  constructor(private service: SmartTableData, private bookingService: BookingService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getAllData();
   }
 
   getAllData() {
-    this.bookings = this.bookingService.getBookingOrders().subscribe((res: any) => {
-      this.source.load(res.data);
+    this.source = new ServerDataSource(this.http, {
+      endPoint: this.url,
+      dataKey: 'data.data',
+      pagerPageKey: 'page',
+      pagerLimitKey: 'perPage',
+      totalKey: 'data.total'
     });
   }
 

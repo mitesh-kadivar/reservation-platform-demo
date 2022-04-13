@@ -29,6 +29,8 @@ import {
   NbTokenStorage,
 } from '@nebular/auth';
 import { environment } from '../environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HeaderInterceptor } from './header.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -90,6 +92,11 @@ import { environment } from '../environments/environment';
     {
       provide: NbTokenStorage,
       useClass: NbTokenLocalStorage
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true,
     }
   ]
 })

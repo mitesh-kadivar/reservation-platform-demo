@@ -24,7 +24,8 @@ class BookingController extends Controller
     public function index() : JsonResponse
     {
         try {
-            $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->get();
+            // $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->get();
+            $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->paginate(config('config.pagination'));
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;
             }
@@ -156,7 +157,7 @@ class BookingController extends Controller
     public function getOrderHistory() : JsonResponse
     {
         try {
-            $order = BookingOrder::with(['resource', 'user'])->get();
+            $order = BookingOrder::with(['resource', 'user'])->paginate(config('config.pagination'));
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;
                 $value->employee_name = $value->user->name;

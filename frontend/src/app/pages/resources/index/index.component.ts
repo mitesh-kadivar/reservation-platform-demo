@@ -66,7 +66,7 @@ export class IndexComponent implements OnInit {
     },
     pager: {
       display: true,
-      perPage: 2
+      perPage: environment.pagination
     }
   };
 

@@ -31,7 +31,7 @@ class EmployeeController extends Controller
                 $users = User::select('id', 'name', 'email', 'description', 'profile')
                                 ->latest()
                                 ->where('is_type', 2)
-                                ->get();
+                                ->paginate(config('config.pagination'));
                 Cache::add('users', $users);
             }
             return $this->success($users, "EMPLOYEES_LIST");

@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ServerDataSource } from 'ng2-smart-table';
 import { environment } from '../../../../environments/environment';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
@@ -61,11 +62,16 @@ export class IndexComponent implements OnInit {
       //   }
       // },
     },
+    pager: {
+      display: true,
+      perPage: environment.pagination
+    }
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
+  url = environment.baseURL + 'employees/get';
 
-  constructor(private service: SmartTableData, private empService: EmployeeService, private router: Router) {}
+  constructor(private service: SmartTableData, private empService: EmployeeService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getAllData();
@@ -87,14 +93,17 @@ export class IndexComponent implements OnInit {
   }
 
   onEditEmployee(event, eventName: string): void {
-    //console.log(eventName, event);
     let empId = btoa(event.data.id);
     this.router.navigate(['/pages/employees/edit/', empId]);
   }
 
   getAllData() {
-    this.empService.getAllEmployees().subscribe((res: any) => {
-      this.source.load(res.data);
+    this.source = new ServerDataSource(this.http, {
+      endPoint: this.url,
+      dataKey: 'data.data',
+      pagerPageKey: 'page',
+      pagerLimitKey: 'perPage',
+      totalKey: 'data.total',
     });
   }
 }

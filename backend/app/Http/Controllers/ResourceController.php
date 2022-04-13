@@ -108,6 +108,9 @@ class ResourceController extends Controller
             return $this->error("RESOURCE_DOES_NOT_EXIST");
         }
 
+        $validations = config('validator.resource.update_resource');
+        $validations['title'] = 'required|unique:resources,title,'.$request->id;
+
         $validator = Validator::make($request->all(), config('validator.resource.update_resource'));
         if ($validator->fails()) {
             return $this->validationError($validator, $validator->messages()->first());

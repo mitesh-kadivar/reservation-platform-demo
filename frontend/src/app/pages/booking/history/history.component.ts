@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ServerDataSource } from 'ng2-smart-table';
 import { SmartTableData } from '../../../@core/data/smart-table';
 import { BookingService } from '../booking.service';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-history',
@@ -53,19 +55,28 @@ export class HistoryComponent implements OnInit {
         type: 'date'
       }
     },
+    pager: {
+      display: true,
+      perPage: environment.pagination,
+    }
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
+  url = environment.baseURL + 'booking/order-history';
 
-  constructor(private service: SmartTableData, private bookingService: BookingService) { }
+  constructor(private service: SmartTableData, private bookingService: BookingService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getAllData();
   }
 
   getAllData() {
-    this.bookings = this.bookingService.getOrderHistory().subscribe((res: any) => {
-      this.source.load(res.data);
+    this.source = new ServerDataSource(this.http, {
+      endPoint: this.url,
+      dataKey: 'data.data',
+      pagerPageKey: 'page',
+      pagerLimitKey: 'perPage',
+      totalKey: 'data.total'
     });
   }
 

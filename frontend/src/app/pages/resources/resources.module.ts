@@ -8,9 +8,6 @@ import { EditComponent } from './edit/edit.component';
 import { ResourcesComponent } from './resources.component';
 import { NbAlertModule, NbCardModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HeaderInterceptor } from './header.interceptor';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,14 +27,6 @@ import { HttpClientModule } from '@angular/common/http';
     NbInputModule,
     NbSelectModule,
     NbAlertModule,
-    HttpClientModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HeaderInterceptor,
-      multi: true,
-    }
   ]
 })
 export class ResourcesModule { }
