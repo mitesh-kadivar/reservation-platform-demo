@@ -23,11 +23,11 @@ return [
     ],
     'resource' => [
         'add_resource' => [
-            'title'       => 'required',
+            'title'       => 'required|unique:resources,title',
             'category_id' => 'required|exists:categories,id',
         ],
         'update_resource' => [
-            'title'       => 'required',
+            'title'       => 'required|unique:resources,title',
             'category_id' => 'required|exists:categories,id',
         ]
     ],

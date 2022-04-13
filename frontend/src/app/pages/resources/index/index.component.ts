@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { SmartTableData } from '../../../@core/data/smart-table';
 import { ResourcesService } from '../resources.service';
-import { LocalDataSource } from 'ng2-smart-table';
+import { ServerDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 import { getUserType } from '../../../auth/authManager';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-index',
@@ -17,6 +17,7 @@ export class IndexComponent implements OnInit {
   formStatus: any = null;
   statusType: any;
   userType: string;
+  page: Number;
 
   settings = {
     // hideSubHeader: true,
@@ -58,7 +59,7 @@ export class IndexComponent implements OnInit {
         filter: false,
         type: 'html',
         valuePrepareFunction: (image) => {
-          this.imagePath =  (image) ? environment.resourceImagePath + image : environment.resourceImagePath + "../../default-user.png";
+          this.imagePath = (image) ? environment.resourceImagePath + image : environment.resourceImagePath + "../../default-user.png";
           return `<img class='table-thumbnail-img' src="${this.imagePath}" width="50" height="50"/>`
         }
       },
@@ -72,13 +73,18 @@ export class IndexComponent implements OnInit {
     this.settings.actions.delete = (this.userType == 'ADMIN') ? true : false;
   }
 
-  source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
+  url = environment.baseURL + 'resources/list';
 
-  constructor(private service: SmartTableData, private resourceService: ResourcesService, private router: Router) { }
+  constructor(private resourceService: ResourcesService, private router: Router, private http: HttpClient) { }
 
   getAllData() {
-    this.resourceService.getAllResources().subscribe((res: any) => {
-      this.source.load(res.data);
+    this.source = new ServerDataSource(this.http, {
+      endPoint: this.url,
+      dataKey: 'data.data',
+      pagerPageKey: 'page',
+      pagerLimitKey: 'perPage',
+      totalKey: 'data.total'
     });
   }
 
@@ -89,13 +95,12 @@ export class IndexComponent implements OnInit {
 
   onDelete(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      this.resourceService.deleteResource(event.data.id).subscribe((res : any) => {
+      this.resourceService.deleteResource(event.data.id).subscribe((res: any) => {
+        this.formStatus = res.meta.message;
         if (res.meta.status === true) {
-          this.formStatus = res.meta.message;
           this.statusType = 'success';
           this.getAllData();
         } else {
-          this.formStatus = res.meta.message;
           this.statusType = 'danger';
         }
       })

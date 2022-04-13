@@ -18,7 +18,7 @@ class ResourceController extends Controller
     public function index() : JsonResponse
     {
         try {
-            $resources = Resource::where('status', 1)->with('categories')->get();
+            $resources = Resource::where('status', 1)->with('categories')->paginate(config('config.pagination'));
             return $this->success($resources, 'RESOURCES_LIST');
         } catch (\Exception $ex) {
             return $this->error($ex->getMessage());

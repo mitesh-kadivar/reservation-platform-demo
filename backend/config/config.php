@@ -7,5 +7,6 @@ return [
     ],
     'resource' => [
         'resource_image_path' => '/images/resource',
-    ]
+    ],
+    'pagination' => 4,
 ];
