@@ -6,6 +6,8 @@ use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
+use App\Models\User;
 use App\Models\Category;
 
 class ResourceController extends Controller
@@ -157,6 +159,29 @@ class ResourceController extends Controller
             }
         } catch (\Exception $ex) {
             return $this->error(($ex->getCode() == 423) ? $ex->getMessage() : 'ERROR');
+        }
+    }
+
+    /**
+     * get Resource Title
+     *
+     * @author  Mitesh Kadivar <mitesh.kadivar@bytestechnolab.in>
+     * @return  JsonResponse
+     */
+
+    public function getResourceTitle() : JsonResponse
+    {
+        try {
+            # Check the records in cache
+            if (Cache::has('resource') && (Resource::count() == Cache::get('resource')->count())) {
+                $resources = Cache::get('resource');
+            } else {
+                $resources = Resource::select('id', 'title')->get();
+                Cache::add('resource', $resources);
+            }
+            return $this->success($resources, "RESOURCES_LIST");
+        } catch (\Exception $ex) {
+            return $this->error($ex->getMessage());
         }
     }
 }

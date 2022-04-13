@@ -22,7 +22,7 @@ export class ResourcesService {
 
   getAllResources() : Observable<Resource[]> {
     this.headers = this.getHeaderData();
-    return this.httpClient.get<Resource[]>(environment.baseURL + `resources/list`, {'headers': this.headers});
+    return this.httpClient.get<Resource[]>(environment.baseURL + `resources/get-all-resource`, {'headers': this.headers});
   }
 
   getCategories(): Observable<Resource> {

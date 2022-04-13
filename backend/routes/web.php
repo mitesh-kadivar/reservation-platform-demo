@@ -39,6 +39,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         # Resources
         $router->group(['prefix' => 'resources'], function () use ($router) {
             $router->get('list', 'ResourceController@index');
+            $router->get('get-all-resource', 'ResourceController@getResourceTitle');
             $router->post('add', 'ResourceController@store');
             $router->get('edit/{id}', 'ResourceController@edit');
             $router->get('categories', 'ResourceController@getCategories');
