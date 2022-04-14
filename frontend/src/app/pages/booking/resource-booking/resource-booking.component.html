@@ -36,6 +36,7 @@
                 <div *ngIf="(getControl.end_date.touched || submitted) && getControl.end_date.invalid" class="text-danger">
                     <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.required">End date-time is required!</div>
                 </div>
+                <div class="text-danger" *ngIf="error.isError">{{error.errorMessage}}</div>
             </nb-card-body>
         </div>
         <div class="form-group">

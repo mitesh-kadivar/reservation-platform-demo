@@ -20,6 +20,8 @@ export class ResourceBookingComponent implements OnInit {
   userData: any;
   statusType: any;
   status: boolean = false;
+  error:any={isError:false,errorMessage:''};
+  isValidDate:any;
 
   constructor(private resourcesService: ResourcesService, public formBuilder: FormBuilder, private router: Router, private bookingService: BookingService) { }
 
@@ -52,9 +54,14 @@ export class ResourceBookingComponent implements OnInit {
         resource: this.resourceBookForm.value.resource,
       }
 
+      this.isValidDate = this.validateDates(updatableData.start_date, updatableData.end_date);
+      if (!this.isValidDate) {
+        return this.router.navigateByUrl('/pages/booking/resource-book');
+      }
       // Check Resource avilable or not
       this.bookingService.checkResourceBooked(updatableData).subscribe((res: any) => {
         if (res.meta.status === true) {   // true: avilable  false: booked
+          this.error.isError = false;
           this.bookingService.resourceBook(updatableData).subscribe((res:any) => {
             if (res.meta.status === false) {
               this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
@@ -70,10 +77,25 @@ export class ResourceBookingComponent implements OnInit {
         } else {
           this.formError = "Already resource is booked";
           this.statusType = 'danger';
+          this.error.isError = false;
           this.router.navigateByUrl('/pages/booking/resource-book');
         }
       });
     }
+  }
+
+  validateDates(sDate: string, eDate: string){
+    this.isValidDate = true;
+    if((sDate == null || eDate ==null)){
+      this.error={isError:true,errorMessage:'Start date and end date are required.'};
+      this.isValidDate = false;
+    }
+
+    if((sDate != null && eDate !=null) && (eDate) < (sDate)){
+      this.error={isError:true,errorMessage:'End date should be grater then start date.'};
+      this.isValidDate = false;
+    }
+    return this.isValidDate;
   }
 
 }

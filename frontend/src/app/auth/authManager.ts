@@ -27,13 +27,13 @@ export const getUserType = () => {
 export const changeFormater = (date) => {
 
     let year   = date.getFullYear();
-    let month  = date.getMonth();
+    let month  = date.getMonth()+1;
     let day    = date.getDate();
     let hours  = date.getHours();
     let minute = date.getMinutes();
     let second = date.getSeconds();
 
-    let dateTime = year+":"+month+":"+day+" "+hours+":"+minute+":"+second;
+    let dateTime = year+"-"+month+"-"+day+" "+hours+":"+minute+":"+second;
 
     return dateTime;
 
