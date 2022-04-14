@@ -25,9 +25,21 @@ export const getUserType = () => {
 }
 
 export const changeFormater = (date) => {
-    let selectedDateTime = date.split('T');
-    selectedDateTime[1] += ":00";
 
-    let orignalDateTime = selectedDateTime[0] +' '+ selectedDateTime[1];
-    return orignalDateTime;
+    let year   = date.getFullYear();
+    let month  = date.getMonth();
+    let day    = date.getDate();
+    let hours  = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    let dateTime = year+":"+month+":"+day+" "+hours+":"+minute+":"+second;
+
+    return dateTime;
+
+    // let selectedDateTime = date.split('T');
+    // selectedDateTime[1] += ":00";
+
+    // let orignalDateTime = selectedDateTime[0] +' '+ selectedDateTime[1];
+    // return orignalDateTime;
 }

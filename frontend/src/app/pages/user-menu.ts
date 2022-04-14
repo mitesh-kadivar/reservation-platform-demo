@@ -3,7 +3,7 @@ import { NbMenuItem } from '@nebular/theme';
 export const USER_MENUS: NbMenuItem[] = [
   {
     title: 'Manage Resources',
-    icon: 'person-outline',
+    icon: 'browser-outline',
     link: '/pages/resources/index',
   },
   {
