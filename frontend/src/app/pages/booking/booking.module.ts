@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { BookingRoutingModule } from './booking-routing.module';
 import { BookingComponent } from './booking.component';
-import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbInputModule, NbSelectModule, NB_TIME_PICKER_CONFIG } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ResourceBookingComponent } from './resource-booking/resource-booking.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
 import { HistoryComponent } from './history/history.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HistoryComponent } from './history/history.component';
     BookingComponent,
     ResourceBookingComponent,
     IndexComponent,
-    HistoryComponent
+    HistoryComponent,
+    DatePickerComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,12 @@ import { HistoryComponent } from './history/history.component';
     NbAlertModule,
     NbDatepickerModule,
     NbSelectModule
+  ],
+  providers: [
+    {
+      provide: NB_TIME_PICKER_CONFIG,
+      useValue: {}
+    }
   ]
 })
 export class BookingModule { }

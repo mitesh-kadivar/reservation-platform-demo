@@ -5,6 +5,7 @@ import { BookingComponent } from './booking.component';
 import { HistoryComponent } from './history/history.component';
 import { IndexComponent } from './index/index.component';
 import { ResourceBookingComponent } from './resource-booking/resource-booking.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,10 @@ const routes: Routes = [{
       path: 'history',
       canActivate: [IsAdminGuard],
       component: HistoryComponent,
+    },
+    {
+      path: 'date',
+      component: DatePickerComponent
     }
   ],
 }];
