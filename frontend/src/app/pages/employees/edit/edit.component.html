@@ -34,8 +34,10 @@
             <label for="description" class="label">Description</label>
             <textarea rows="3" nbInput fullWidth placeholder="Description" formControlName="description" [(ngModel)]="employee.description"></textarea>
           </div>
+          <div class="text-center">
           <button type="submit" nbButton status="danger" [class.btn-primary]="editRegisterForm.valid" [class.btn-secondary]="!editRegisterForm.valid"
-          class="btn btn-block">Submit</button>
+          class="btn btn-sm">Update</button>
+          </div>
         </form>
       </nb-card-body>
     </nb-card>

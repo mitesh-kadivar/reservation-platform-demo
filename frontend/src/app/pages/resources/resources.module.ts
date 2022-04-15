@@ -6,7 +6,7 @@ import { CreateComponent } from './create/create.component';
 import { IndexComponent } from './index/index.component';
 import { EditComponent } from './edit/edit.component';
 import { ResourcesComponent } from './resources.component';
-import { NbAlertModule, NbCardModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
@@ -27,6 +27,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbInputModule,
     NbSelectModule,
     NbAlertModule,
+    NbButtonModule
   ]
 })
 export class ResourcesModule { }

@@ -34,7 +34,9 @@
                     </div>
                     <img class='table-thumbnail-img' src="{{resource.image}}" width="50" height="50" />
                 </div>
-                <button type="submit" nbButton status="danger" [class.btn-primary]="editRegisterForm.valid" [class.btn-secondary]="!editRegisterForm.valid" class="btn btn-block">Submit</button>
+                <div class="text-center">
+                <button type="submit" nbButton status="danger" [class.btn-primary]="editRegisterForm.valid" [class.btn-secondary]="!editRegisterForm.valid" class="btn btn-sm">Update</button>
+                </div>
             </form>
         </nb-card-body>
     </nb-card>

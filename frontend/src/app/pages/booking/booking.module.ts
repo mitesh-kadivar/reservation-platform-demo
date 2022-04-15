@@ -9,7 +9,6 @@ import { ResourceBookingComponent } from './resource-booking/resource-booking.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
 import { HistoryComponent } from './history/history.component';
-import { DatePickerComponent } from './date-picker/date-picker.component';
 
 
 @NgModule({
@@ -17,8 +16,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     BookingComponent,
     ResourceBookingComponent,
     IndexComponent,
-    HistoryComponent,
-    DatePickerComponent
+    HistoryComponent
   ],
   imports: [
     CommonModule,

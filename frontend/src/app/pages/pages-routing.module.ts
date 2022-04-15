@@ -2,8 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { IsAdminGuard } from '../auth/is-admin.guard';
@@ -12,14 +10,6 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
-      path: 'dashboard',
-      component: ECommerceComponent,
-    },
-    {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
-    },
     {
       path: 'employees',
       canActivate: [AuthGuard],
@@ -37,11 +27,6 @@ const routes: Routes = [{
       canActivate: [AuthGuard],
       loadChildren: () => import('./booking/booking.module')
         .then(m => m.BookingModule),
-    },
-    {
-      path: 'tables',
-      loadChildren: () => import('./tables/tables.module')
-        .then(m => m.TablesModule),
     },
     {
       path: 'miscellaneous',
