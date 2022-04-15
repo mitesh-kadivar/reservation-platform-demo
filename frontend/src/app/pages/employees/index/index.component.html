@@ -1,12 +1,18 @@
 <nb-card>
-    <nb-card-header>
-      Manage Employees
-      <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
-      <a class="btn btn-warning btn-sm float-right" routerLink="/pages/employees/create"><i class="fa fa-plus-circle fa-2x"></i></a>
-    </nb-card-header>
-  
-    <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (edit)="onEditEmployee($event, 'edit') " (delete)="onDelete($event)">
-      </ng2-smart-table>
-    </nb-card-body>
+  <nb-card-header>
+    Manage Employees
+    <nb-alert *ngIf="formStatus" [status]="statusType" closable (close)="closeAlert()">{{ formStatus }}</nb-alert>
+    <a class="btn btn-warning btn-sm float-right" routerLink="/pages/employees/create">
+      <i class="fa fa-plus-circle fa-2x"></i>
+    </a>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (edit)="onEditEmployee($event, 'edit')"
+      (delete)="onDelete($event)"
+    ></ng2-smart-table>
+  </nb-card-body>
 </nb-card>

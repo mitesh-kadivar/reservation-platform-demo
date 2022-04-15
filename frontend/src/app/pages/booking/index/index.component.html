@@ -1,10 +1,12 @@
 <nb-card>
     <nb-card-header>
       Booking History
-      <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
-      <a class="btn btn-warning btn-sm float-right" routerLink="/pages/booking/resource-book"><i class="fa fa-plus-circle fa-2x"></i></a>
+      <nb-alert *ngIf="formStatus" [status]="statusType" closable (close)="closeAlert()">{{formStatus}}</nb-alert>
+      <a class="btn btn-warning btn-sm float-right" routerLink="/pages/booking/resource-book">
+        <i class="fa fa-plus-circle fa-2x"></i>
+      </a>
     </nb-card-header>
-  
+
     <nb-card-body>
       <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)">
       </ng2-smart-table>

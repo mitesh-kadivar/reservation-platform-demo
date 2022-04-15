@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-header>
       History
-      <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
+      <nb-alert *ngIf="formError" [status]="statusType" closable (close)="closeAlert()">{{formError}}</nb-alert>
     </nb-card-header>
   
     <nb-card-body>

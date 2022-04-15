@@ -24,7 +24,6 @@ class BookingController extends Controller
     public function index() : JsonResponse
     {
         try {
-            // $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->get();
             $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->latest()->paginate(config('config.pagination'));
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;

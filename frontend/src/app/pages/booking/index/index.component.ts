@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource, ServerDataSource } from 'ng2-smart-table';
+import { ServerDataSource } from 'ng2-smart-table';
 import { environment } from '../../../../environments/environment';
 import { SmartTableData } from '../../../@core/data/smart-table';
 import { BookingService } from '../booking.service';
@@ -13,7 +13,7 @@ import { BookingService } from '../booking.service';
 export class IndexComponent implements OnInit {
 
   bookings: any;
-  formError: any = null;
+  formStatus: any = null;
   statusType: any;
 
   settings = {
@@ -80,15 +80,18 @@ export class IndexComponent implements OnInit {
   onDelete(event): void {
     if (window.confirm('Are you sure you want to cancel this booked resource?')) {
       this.bookingService.cancelOrder(event.data.id).subscribe((res : any) => {
+        this.formStatus = res.meta.message;
         if (res.meta.status === true) {
-          this.formError = res.meta.message;
           this.statusType = 'success';
           this.getAllData();
         } else {
-          this.formError = res.meta.message;
           this.statusType = 'danger';
         }
       })
     }
+  }
+
+  closeAlert() {
+    this.formStatus = false;
   }
 }

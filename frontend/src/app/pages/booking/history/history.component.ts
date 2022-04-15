@@ -95,4 +95,8 @@ export class HistoryComponent implements OnInit {
     }
   }
 
+  closeAlert() {
+    this.formError = false;
+  }
+
 }

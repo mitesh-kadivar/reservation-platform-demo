@@ -1,44 +1,24 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { Event } from '@angular/router';
+import { Router } from '@angular/router';
+import { IndexComponent } from './index/index.component';
 @Component({
   selector: 'ngx-employees',
-  templateUrl: './employees.component.html',
+  template: `
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  `
 })
 export class EmployeesComponent {
 
-  add_flag: boolean = false;
-  edit_flag: boolean = false;
-  message: string;
+  constructor(private router: Router) { }
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        this.route.queryParams.subscribe(params => {
-          if (params['status'] == 'edit_successful') {
-            this.edit_flag = true;
-            this.add_flag = false;
-          } else if (params['status'] == 'add_successful') {
-            this.add_flag = true;
-            this.edit_flag = false;
-          } else {
-            this.edit_flag = false;
-            this.add_flag = false;
-          }
-          this.message = this.messages[params['status']];
-        });
-      }
-    })
-  }
+  onActivate(componentRef) {
+    let eventType = this.router.getCurrentNavigation().extras.state?.[0];
+    let eventMessage = this.router.getCurrentNavigation().extras.state?.[1];
 
-  messages = {
-    edit_successful: "The employee details are updated successfully",
-    add_successful: "New employee inserted successfully",
-  };
-
-  closeAlert(): void {
-    this.edit_flag = false;
-    this.add_flag = false;
+    if (eventType && eventMessage && componentRef instanceof IndexComponent) {
+      componentRef.formStatus = eventMessage;
+      componentRef.statusType = eventType;
+    }
   }
 
 }

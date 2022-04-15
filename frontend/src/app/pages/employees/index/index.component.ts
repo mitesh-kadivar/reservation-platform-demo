@@ -5,7 +5,6 @@ import { ServerDataSource } from 'ng2-smart-table';
 import { environment } from '../../../../environments/environment';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
-import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -16,7 +15,7 @@ import { EmployeeService } from '../employee.service';
 export class IndexComponent implements OnInit {
 
   imagePath: string;
-  formError: any = null;
+  formStatus: any = null;
   statusType: any;
 
   settings = {
@@ -81,11 +80,11 @@ export class IndexComponent implements OnInit {
     if (window.confirm('Are you sure you want to delete?')) {
       this.empService.deleteEmployee(event.data.id).subscribe((res : any) => {
         if (res.meta.status === true) {
-          this.formError = res.meta.message;
+          this.formStatus = res.meta.message;
           this.statusType = 'success';
           this.getAllData();
         } else {
-          this.formError = res.meta.message;
+          this.formStatus = res.meta.message;
           this.statusType = 'danger';
         }
       })
@@ -105,5 +104,9 @@ export class IndexComponent implements OnInit {
       pagerLimitKey: 'perPage',
       totalKey: 'data.total',
     });
+  }
+
+  closeAlert(): void {
+    this.formStatus = false;
   }
 }

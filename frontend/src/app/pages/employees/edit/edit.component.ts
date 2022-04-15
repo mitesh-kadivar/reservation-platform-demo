@@ -67,13 +67,20 @@ export class EditComponent implements OnInit {
         description: this.editRegisterForm.value.description
       };
       this.employeeService.update(this.empId, updatableData).subscribe((res: any) => {
+        this.formError = res.meta.message;
         if (res.meta.status === false) {
-          this.formError = res.meta.message;
           this.statusType = 'danger';
         } else {
-         this.formError = res.meta.message;
-         this.statusType = 'success';
-         this.router.navigateByUrl('pages/employees/index?status=edit_successful');
+          this.statusType = 'success';
+          this.router.navigate(
+            ['pages/employees/index'],
+            {
+              state: [
+                'success',
+                res.meta.message
+              ]
+            }
+          );
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;

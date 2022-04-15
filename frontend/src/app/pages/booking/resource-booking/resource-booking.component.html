@@ -2,7 +2,7 @@
     <nb-card>
     <nb-card-header>Book Resource <a class="btn btn-warning btn-sm float-right" routerLink="/pages/booking/index"><i class="fa fa-arrow-left fa-2x"></i></a></nb-card-header>
     <nb-card-body>
-        <nb-alert *ngIf="formError" status="{{statusType}}">{{formError}}</nb-alert>
+        <nb-alert *ngIf="formError" [status]="statusType">{{formError}}</nb-alert>
         <form [formGroup]="resourceBookForm" (ngSubmit)="resourceBook()">
         <!-- <div class="form-group">
             <label for="name" class="label">Start Date*</label><br />
