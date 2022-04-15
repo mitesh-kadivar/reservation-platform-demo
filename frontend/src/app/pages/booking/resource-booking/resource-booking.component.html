@@ -21,8 +21,8 @@
         <div class="form-group">
             <nb-card-body>
                 <label for="name" class="label">Start Date*</label><br />
-                <input nbInput fullWidth placeholder="Pick Date" [nbDatepicker]="start_date" formControlName="start_date">
-                <nb-date-timepicker withSeconds #start_date></nb-date-timepicker>
+                <input nbInput fullWidth placeholder="Pick Date" [nbDatepicker]="start_date" (ngModelChange)="getStartDate($event)" formControlName="start_date">
+                <nb-date-timepicker withSeconds #start_date [min]="minDate" [max]="selectedEndDate"></nb-date-timepicker>
                 <div *ngIf="(getControl.start_date.touched || submitted) && getControl.start_date.invalid" class="text-danger">
                     <div *ngIf="getControl.start_date.errors && getControl.start_date.errors.required">Start date-time is required!</div>
                 </div>
@@ -31,8 +31,8 @@
         <div class="form-group">
             <nb-card-body>
                 <label for="name" class="label">End Date*</label><br/>
-                <input nbInput fullWidth placeholder="Pick Date" [nbDatepicker]="end_date" formControlName="end_date">
-                <nb-date-timepicker withSeconds #end_date></nb-date-timepicker>
+                <input nbInput fullWidth placeholder="Pick Date" [nbDatepicker]="end_date" (ngModelChange)="getEndDate($event)" formControlName="end_date">
+                <nb-date-timepicker withSeconds #end_date [min]="selectedStartDate"></nb-date-timepicker>
                 <div *ngIf="(getControl.end_date.touched || submitted) && getControl.end_date.invalid" class="text-danger">
                     <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.required">End date-time is required!</div>
                 </div>

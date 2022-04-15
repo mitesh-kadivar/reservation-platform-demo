@@ -22,6 +22,9 @@ export class ResourceBookingComponent implements OnInit {
   status: boolean = false;
   error:any={isError:false,errorMessage:''};
   isValidDate:any;
+  minDate:any;
+  selectedStartDate:any;
+  selectedEndDate:any;
 
   constructor(private resourcesService: ResourcesService, public formBuilder: FormBuilder, private router: Router, private bookingService: BookingService) { }
 
@@ -38,6 +41,8 @@ export class ResourceBookingComponent implements OnInit {
 
     this.userData = getAuthenticatedUserData();
     this.user_id  = this.userData.id;
+    this.minDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() - 1);
   }
 
   get getControl() {
@@ -82,6 +87,13 @@ export class ResourceBookingComponent implements OnInit {
         }
       });
     }
+  }
+
+  getStartDate($event) {
+    this.selectedStartDate = new Date($event);
+  }
+  getEndDate($event) {
+    this.selectedEndDate = new Date($event);
   }
 
   validateDates(sDate: string, eDate: string){
