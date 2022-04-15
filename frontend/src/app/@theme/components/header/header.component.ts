@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.employeeService.getAvatar().subscribe(res => {
         if (res) {
           this.user.name    = res.name;
-          this.user.picture = environment.imagePath + res.image;
+          this.user.picture = (res.image) ? environment.imagePath + res.image : environment.imagePath + "../../default-user.png";
         }
       });
       let profile = (userData.profile) ? environment.imagePath + userData.profile : environment.imagePath + "../../default-user.png";
