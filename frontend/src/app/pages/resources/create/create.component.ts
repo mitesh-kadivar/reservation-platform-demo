@@ -65,9 +65,17 @@ export class CreateComponent implements OnInit {
           this.formError = (res.meta.message == "error.Undefined offset: 1") ? "Oops Something went wrong, Please try again.!" : res.meta.message;
           this.statusType = 'danger';
         } else {
-         this.formError = res.meta.message;
-         this.statusType = 'success';
-         this.router.navigateByUrl('pages/resources/index?status=add_successful');
+          this.formError = res.meta.message;
+          this.statusType = 'success';
+          this.router.navigate(
+            ['pages/resources/index'],
+            {
+              state: [
+                'success',
+                res.meta.message
+              ]
+            }
+          );
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;

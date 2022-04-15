@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ResourcesService } from '../resources.service';
 import { ServerDataSource } from 'ng2-smart-table';
@@ -18,6 +18,8 @@ export class IndexComponent implements OnInit {
   statusType: any;
   userType: string;
   page: Number;
+
+  @Output() newItemEvent = new EventEmitter<string>();
 
   settings = {
     // hideSubHeader: true,

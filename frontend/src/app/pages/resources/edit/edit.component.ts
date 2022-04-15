@@ -75,13 +75,20 @@ export class EditComponent implements OnInit {
         if (res.meta.status === false) {
           this.statusType = 'danger';
         } else {
-         this.statusType = 'success';
-         this.router.navigateByUrl('pages/resources/index?status=edit_successful');
+          this.statusType = 'success';
+          this.router.navigate(
+            ['pages/resources/index'],
+            {
+              state: [
+                'success',
+                res.meta.message
+              ]
+            }
+          );
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;
       })
-
     }
   }
 }
