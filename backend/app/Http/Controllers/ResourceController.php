@@ -28,7 +28,14 @@ class ResourceController extends Controller
             foreach ($params as $key => $param) {
                 if (strstr($param, 'like')) {
                     $search = explode('_', $param)[0];
-                    $resources = $resources->where($search, 'like', '%'.$request[$param].'%');
+                    $searchValue = $request[$param];
+                    if ($search == 'categories') {
+                        $resources->whereHas('categories', function ($query) use ($searchValue) {
+                            $query->where('title', 'like', '%'.$searchValue.'%');
+                        });
+                    } else {
+                        $resources = $resources->where($search, 'like', '%'.$request[$param].'%');
+                    }
                 }
             }
 

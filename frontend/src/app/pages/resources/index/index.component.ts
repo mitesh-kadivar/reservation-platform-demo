@@ -48,10 +48,12 @@ export class IndexComponent implements OnInit {
         title: 'Title',
         type: 'string',
         filter: true,
+        sort: false
       },
       categories: {
         title: 'Category',
         type: 'string',
+        sort: false,
         valuePrepareFunction: (categories) => {
           return (categories) ? categories.title : "No Category";
         }
@@ -60,6 +62,7 @@ export class IndexComponent implements OnInit {
         title: 'Image',
         filter: false,
         type: 'html',
+        sort: false,
         valuePrepareFunction: (image) => {
           this.imagePath = (image) ? environment.resourceImagePath + image : environment.resourceImagePath + "../../default-user.png";
           return `<img class='table-thumbnail-img' src="${this.imagePath}" width="50" height="50"/>`
