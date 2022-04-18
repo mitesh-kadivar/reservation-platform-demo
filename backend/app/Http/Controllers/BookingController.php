@@ -21,10 +21,30 @@ class BookingController extends Controller
      * @return  JsonResponse
      */
 
-    public function index() : JsonResponse
+    public function index(Request $request) : JsonResponse
     {
         try {
-            $order = BookingOrder::with('resource')->where('user_id', Auth::user()->id)->latest()->paginate(config('config.pagination'));
+            $params = array_keys($request->all());
+            $searches = [];
+
+            $order = BookingOrder::with('resource')
+            ->where('user_id', Auth::user()->id)
+            ->latest();
+            foreach ($params as $key => $param) {
+                if (strstr($param, 'like')) {
+                    $search = explode('_', $param)[0];
+                    $searchValue = $request[$param];
+                    if ($search == 'resource') {
+                        $order->whereHas('resource', function ($query) use ($searchValue) {
+                            $query->where('title', 'like', '%'.$searchValue.'%');
+                        });
+                    } else {
+                        $search = $search."_date";
+                        $order  = $order->where($search, 'like', '%'.$request[$param].'%');
+                    }
+                }
+            }
+            $order = $order->paginate(config('config.pagination'));
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;
             }
@@ -153,10 +173,33 @@ class BookingController extends Controller
      * @return  JsonResponse
      */
 
-    public function getOrderHistory() : JsonResponse
+    public function getOrderHistory(Request $request) : JsonResponse
     {
         try {
-            $order = BookingOrder::with(['resource', 'user'])->latest()->paginate(config('config.pagination'));
+            $params   = array_keys($request->all());
+            $searches = [];
+
+            $order = BookingOrder::with(['resource', 'user'])
+            ->latest();
+            foreach ($params as $key => $param) {
+                if (strstr($param, 'like')) {
+                    $search = explode('_', $param)[0];
+                    $searchValue = $request[$param];
+                    if ($search == 'resource') {
+                        $order->whereHas('resource', function ($query) use ($searchValue) {
+                            $query->where('title', 'like', '%'.$searchValue.'%');
+                        });
+                    } elseif ($search == 'employee') {
+                        $order->whereHas('user', function ($query) use ($searchValue) {
+                            $query->where('name', 'like', '%'.$searchValue.'%');
+                        });
+                    } else {
+                        $search = $search."_date";
+                        $order  = $order->where($search, 'like', '%'.$request[$param].'%');
+                    }
+                }
+            }
+            $order = $order->paginate(config('config.pagination'));
             foreach ($order as $value) {
                 $value->resource_name = $value->resource->title;
                 $value->employee_name = $value->user->name;

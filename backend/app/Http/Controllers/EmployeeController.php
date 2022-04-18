@@ -33,12 +33,12 @@ class EmployeeController extends Controller
                 $users = User::select('id', 'name', 'email', 'description', 'profile')
                                 ->latest()
                                 ->where('is_type', 2);
-                        foreach ($params as $key => $param) {
-                            if (strstr($param, 'like')) {
-                                $search = explode('_', $param)[0];
-                                $users  = $users->where($search, 'like', '%'.$request[$param].'%');
-                            }
-                        }
+                foreach ($params as $key => $param) {
+                    if (strstr($param, 'like')) {
+                        $search = explode('_', $param)[0];
+                        $users  = $users->where($search, 'like', '%'.$request[$param].'%');
+                    }
+                }
                 $users = $users->paginate(config('config.pagination'));
                 Cache::add('users', $users);
             }

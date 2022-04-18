@@ -41,14 +41,17 @@ export class IndexComponent implements OnInit {
       resource_name: {
         title: 'Resource',
         type: 'string',
+        sort: false
       },
       start_date: {
         title: 'Start Date',
-        type: 'date'
+        type: 'date',
+        sort: false
       },
       end_date: {
         title: 'End Date',
-        type: 'date'
+        type: 'date',
+        sort: false
       }
     },
     pager: {
