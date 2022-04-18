@@ -17,10 +17,22 @@ class ResourceController extends Controller
      * @author Harshil Shah
      * @return JsonResponse
      */
-    public function index() : JsonResponse
+    public function index(Request $request) : JsonResponse
     {
         try {
-            $resources = Resource::where('status', 1)->with('categories')->latest()->paginate(config('config.pagination'));
+            $params = array_keys($request->all());
+            $searches = [];
+
+            $resources = Resource::where('status', 1)->with('categories');
+
+            foreach ($params as $key => $param) {
+                if (strstr($param, 'like')) {
+                    $search = explode('_', $param)[0];
+                    $resources = $resources->where($search, 'like', '%'.$request[$param].'%');
+                }
+            }
+
+            $resources = $resources->latest()->paginate(config('config.pagination'));
             return $this->success($resources, 'RESOURCES_LIST');
         } catch (\Exception $ex) {
             return $this->error($ex->getMessage());

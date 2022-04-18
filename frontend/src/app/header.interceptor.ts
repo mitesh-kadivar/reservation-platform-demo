@@ -17,7 +17,7 @@ export class HeaderInterceptor implements HttpInterceptor {
     let params = [];
     request.urlWithParams.split('?')?.[1]?.split('&').forEach(item => params.push(item.split('=')?.[0]));
 
-    if (params[0] == 'page' && params[1] == 'perPage') {
+    if (params.includes('page') && params.includes('perPage')) {
       let token = this.authService.getBearerToken();
       request = request.clone({
         setHeaders: {
