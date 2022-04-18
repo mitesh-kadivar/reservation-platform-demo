@@ -75,7 +75,15 @@ export class ProfileComponent implements OnInit {
            image: res.data.profile
          }
          this.employeeService.setAvatar(userInfo);
-         this.router.navigateByUrl('pages/employees/index');
+         this.router.navigate(
+          ['pages/employees/index'],
+          {
+            state: [
+              'success',
+              res.meta.message
+            ]
+          }
+        );
         }
       }, error => {
         this.formError = JSON.stringify(error.error) || error;
