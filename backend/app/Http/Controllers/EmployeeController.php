@@ -21,17 +21,25 @@ class EmployeeController extends Controller
      * @return  JsonResponse
      */
 
-    public function index() : JsonResponse
+    public function index(Request $request) : JsonResponse
     {
         try {
+            $params = array_keys($request->all());
+            $searches = [];
             # Check the records in cache
             if (Cache::has('users') && (User::count() == Cache::get('users')->count())) {
                 $users = Cache::get('users');
             } else {
                 $users = User::select('id', 'name', 'email', 'description', 'profile')
                                 ->latest()
-                                ->where('is_type', 2)
-                                ->paginate(config('config.pagination'));
+                                ->where('is_type', 2);
+                        foreach ($params as $key => $param) {
+                            if (strstr($param, 'like')) {
+                                $search = explode('_', $param)[0];
+                                $users  = $users->where($search, 'like', '%'.$request[$param].'%');
+                            }
+                        }
+                $users = $users->paginate(config('config.pagination'));
                 Cache::add('users', $users);
             }
             return $this->success($users, "EMPLOYEES_LIST");

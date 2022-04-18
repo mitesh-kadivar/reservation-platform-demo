@@ -42,14 +42,17 @@ export class IndexComponent implements OnInit {
       name: {
         title: 'Name',
         type: 'string',
+        sort: false
       },
       email: {
         title: 'E-mail',
         type: 'string',
+        sort: false
       },
       description: {
         title: 'Description',
-        type: 'text'
+        type: 'text',
+        sort: false
       },
       // profile: {
       //   title: 'Profile',
