@@ -32,7 +32,7 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.user_email    = localStorage.getItem('remembe_email');
-    this.user_password = localStorage.getItem('remembe_password');
+    this.user_password = (localStorage.getItem('remembe_password')) ? atob(localStorage.getItem('remembe_password')) : '';
 
     if (this.user_email && this.user_password) {
       this.cookie = true;
@@ -59,7 +59,7 @@ export class LoginComponent extends NbLoginComponent implements OnInit {
       if (form.rememberMe) {
         this.cookie = true;
         localStorage.setItem('remembe_email', form.email);
-        localStorage.setItem('remembe_password', form.password);
+        localStorage.setItem('remembe_password', btoa(form.password));
       } else {
         localStorage.removeItem('remembe_email');
         localStorage.removeItem('remembe_password');
