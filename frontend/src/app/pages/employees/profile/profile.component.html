@@ -9,7 +9,14 @@
                     <input type="text" formControlName="name" nbInput fullWidth id="name" placeholder="Name"
                         [(ngModel)]="loggedUserData.name" autocomplete="off">
                     <div *ngIf="(getControl.name.touched || submitted) && getControl.name.invalid" class="text-danger">
-                        <div *ngIf="getControl.name.errors && getControl.name.errors.required">Name is required!</div>
+                        <div *ngIf="getControl.name.errors && getControl.name.errors.required; else patternValidation">
+                            Name is required!
+                        </div>
+                        <ng-template #patternValidation>
+                            <div *ngIf="getControl.name.errors && getControl.name.errors.pattern">
+                                Name must contain letters optionally followed by a space optionally followed by letters
+                            </div>
+                        </ng-template>
                     </div>
                 </div>
                 <div class="form-group">
@@ -18,8 +25,7 @@
                         (change)="onFileChange($event)">
                     <div *ngIf="(getControl.profile.touched || submitted) && getControl.profile.invalid"
                         class="text-danger">
-                        <label *ngIf="getControl.profile.errors?.inValidExt
-                    && !getControl.profile.errors?.required" class="error">
+                        <label *ngIf="getControl.profile.errors?.inValidExt && !getControl.profile.errors?.required" class="error">
                             Accepted only jpg, png, jpeg file.
                         </label>
                     </div>

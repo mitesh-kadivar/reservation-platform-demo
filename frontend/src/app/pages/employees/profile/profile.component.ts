@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z]{1,} *[a-zA-Z]*')]],
       profile: ['', [fileExtensionValidator('jpg, png, jpeg, JPG, PNG')]],
       description: [''],
     })
