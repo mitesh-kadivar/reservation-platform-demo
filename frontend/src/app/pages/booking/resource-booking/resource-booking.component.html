@@ -31,7 +31,14 @@
             <input nbInput fullWidth placeholder="Pick Date" [nbDatepicker]="end_date" (ngModelChange)="getEndDate($event)" formControlName="end_date">
             <nb-date-timepicker withSeconds #end_date [min]="selectedStartDate"></nb-date-timepicker>
             <div *ngIf="(getControl.end_date.touched || submitted) && getControl.end_date.invalid" class="text-danger">
-                <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.required">End date-time is required!</div>
+                <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.required; else datePickerMinError;">
+                    End date-time is required!
+                </div>
+                <ng-template #datePickerMinError>
+                    <div *ngIf="getControl.end_date.errors && getControl.end_date.errors.nbDatepickerMin">
+                        End Date must be greater than Start Date
+                    </div>
+                </ng-template>
             </div>
             <div class="text-danger" *ngIf="error.isError">{{error.errorMessage}}</div>
         </div>
