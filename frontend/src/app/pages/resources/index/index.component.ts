@@ -19,8 +19,6 @@ export class IndexComponent implements OnInit {
   userType: string;
   page: Number;
 
-  @Output() newItemEvent = new EventEmitter<string>();
-
   settings = {
     // hideSubHeader: true,
     mode: 'external',

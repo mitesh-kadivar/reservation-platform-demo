@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\BookingOrder;
 
 class ResourceController extends Controller
 {
@@ -171,6 +172,12 @@ class ResourceController extends Controller
 
         if ($resource === null) {
             return $this->error("RESOURCE_DOES_NOT_EXIST");
+        }
+
+        $is_resource_booked = BookingOrder::where('resource_id', $id)->first();
+
+        if ($is_resource_booked) {
+            return $this->error('RESOURCE_BOOKED');
         }
 
         try {
