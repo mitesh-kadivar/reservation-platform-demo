@@ -7,6 +7,7 @@ import { EditComponent } from './edit/edit.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { IsAdminGuard } from '../../auth/is-admin.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [{
   path: '',
@@ -34,7 +35,11 @@ const routes: Routes = [{
     {
       path: 'profile',
       component: ProfileComponent
-    }
+    },
+    {
+      path: 'user-profile',
+      component: UserProfileComponent
+    },
   ],
 }];
 

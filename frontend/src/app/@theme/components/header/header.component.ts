@@ -43,7 +43,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Change Password' }, { title: 'Log out' } ];
+  userMenu = [
+    // { title: 'Profile' },
+    // { title: "Change Password" },
+    { title: "User Profile" },
+    { title: "Log out" }
+  ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -95,11 +100,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event.item.title === 'Log out') {
         this.authService.logout();
         this.router.navigate(['/auth']);
-      } else if (event.item.title === 'Change Password') {
-        this.router.navigate(['/pages/employees/change-password']);
-      } else if (event.item.title === 'Profile') {
-        this.router.navigate(['/pages/employees/profile']);
-      }
+      // } else if (event.item.title === 'Change Password') {
+      //   this.router.navigate(['/pages/employees/change-password']);
+      } else if (event.item.title === "User Profile") {
+        this.router.navigate(['/pages/employees/user-profile']);
+      }// else if (event.item.title === 'Profile') {
+      //   this.router.navigate(['/pages/employees/profile']);
+      // }
      });
   }
 

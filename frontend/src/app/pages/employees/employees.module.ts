@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../auth/token.interceptor';
 import { AuthService } from '../../auth/auth.service';
 import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { ProfileComponent } from './profile/profile.component';
     IndexComponent,
     EditComponent,
     ChangePasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserProfileComponent
   ],
   providers: [
     AuthService,

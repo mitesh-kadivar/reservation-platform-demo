@@ -1,0 +1,180 @@
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header> Change Password </nb-card-header>
+            <nb-card-body>
+                <nb-alert
+                    *ngIf="changePasswordFormError"
+                    [status]="changePasswordStatusType"
+                    closable
+                    (close)="closeChangePasswordAlert()"
+                >
+                    {{ changePasswordFormError }}
+                </nb-alert>
+                <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+                    <div class="form-group">
+                        <label for="old_password" class="label">Old password*</label>
+
+                        <input
+                            type="password"
+                            formControlName="old_password"
+                            nbInput fullWidth
+                            id="old_password"
+                            placeholder="Old password"
+                            autocomplete="off"
+                        />
+
+                        <div
+                            *ngIf="(getChangePasswordControl.old_password.touched || changePasswordSubmitted) && getChangePasswordControl.old_password.invalid"
+                            class="text-danger"
+                        >
+                            <div
+                                *ngIf="getChangePasswordControl.old_password.errors && getChangePasswordControl.old_password.errors.required"
+                            >
+                                Old password is required!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="new_password" class="label">New password*</label>
+                        &nbsp;
+                        <span data-toggle="tooltip" data-placement="top" title="i.e: Test@123">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </span>
+
+                        <input
+                            type="password"
+                            formControlName="new_password"
+                            nbInput fullWidth
+                            id="new_password"
+                            placeholder="New password"
+                            autocomplete="off"
+                        />
+
+                        <div 
+                            *ngIf="(getChangePasswordControl.new_password.touched || changePasswordSubmitted) && getChangePasswordControl.new_password.invalid"
+                            class="text-danger"
+                        >
+                            <div *ngIf="getChangePasswordControl.new_password.errors && getChangePasswordControl.new_password.errors.required">
+                                New password is required!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="label">Confirm password*</label>
+                        <input
+                            type="password"
+                            formControlName="confirm_password"
+                            nbInput fullWidth
+                            id="confirm_password"
+                            placeholder="Confirm password"
+                            autocomplete="off"
+                        />
+
+                        <div 
+                            *ngIf="(getChangePasswordControl.confirm_password.touched || changePasswordSubmitted) && getChangePasswordControl.confirm_password.invalid"
+                            class="text-danger"
+                        >
+                            <div
+                                *ngIf="getChangePasswordControl.confirm_password.errors && getChangePasswordControl.confirm_password.errors.required"
+                            >
+                                Confirm password is required!
+                            </div>
+                            <div *ngIf="getChangePasswordControl.confirm_password.errors.confirmedValidator">
+                                Password and Confirm Password must be match.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" nbButton status="danger" class="btn btn-sm">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header> Profile </nb-card-header>
+            <nb-card-body>
+                <nb-alert
+                    *ngIf="profileFormError"
+                    [status]="profileStatusType"
+                    closable
+                    (close)="closeProfileAlert()"
+                >
+                    {{ profileFormError }}
+                </nb-alert>
+                <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name" class="label">Name*</label>
+
+                        <input
+                            type="text"
+                            nbInput fullWidth
+                            id="name"
+                            placeholder="Name"
+                            autocomplete="off"
+                            formControlName="name"
+                            [(ngModel)]="loggedUserData.name"
+                        />
+
+                        <div *ngIf="(getProfileControl.name.touched || profileSubmitted) && getProfileControl.name.invalid" class="text-danger">
+                            <div *ngIf="getProfileControl.name.errors && getProfileControl.name.errors.required; else patternValidation">
+                                Name is required!
+                            </div>
+                            <ng-template #patternValidation>
+                                <div *ngIf="getProfileControl.name.errors && getProfileControl.name.errors.pattern">
+                                    Name must contain letters optionally followed by a space optionally followed by letters
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile" class="label">Profile</label>
+
+                        <input
+                            type="file"
+                            nbInput fullWidth
+                            id="profile"
+                            formControlName="profile"
+                            (change)="onFileChange($event)"
+                        />
+
+                        <div
+                            *ngIf="(getProfileControl.profile.touched || profileSubmitted) && getProfileControl.profile.invalid"
+                            class="text-danger"
+                        >
+                            <label 
+                                *ngIf="getProfileControl.profile.errors?.inValidExt && !getProfileControl.profile.errors?.required"
+                                class="error"
+                            >
+                                Accepted only jpg, png, jpeg file.
+                            </label>
+                        </div>
+
+                        <img class='table-thumbnail-img' [src]="loggedUserData.photo" width="50" height="50" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="label">Description</label>
+
+                        <textarea
+                            rows="3"
+                            nbInput fullWidth
+                            placeholder="Description"
+                        ></textarea>
+
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" nbButton status="danger" class="btn btn-sm">Submit</button>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
